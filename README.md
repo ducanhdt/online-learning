@@ -23,11 +23,11 @@ Your Windows system should have the following installed first:
 
 ### Steps to Install
 
-- First, clone [this repository](https://github.com/huyenpk97/chatbot).
+- First, clone [this repository](https://github.com/ducanhdt/online-learning.git).
 
 ```shell
-$ git clone https://github.com/huyenpk97/chatbot.git
-$ cd chatbot
+$ git clone https://github.com/ducanhdt/online-learning.git
+$ cd online-learning
 ```
 - Then, run the following command and go grab a cup of water 🥤 while waiting for it to finish (it will take a few minutes):
 
