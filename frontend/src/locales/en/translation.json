@@ -1,0 +1,69 @@
+{
+  "loginpage": {
+    "login": "Login",
+    "email": "Email Address",
+    "password": "Password",
+    "forgetPassword": "Forget Password?"
+  },
+
+  "topbar": {
+    "settings": "Settings",
+    "account": "Account",
+    "logout": "Logout",
+    "language":"Language",
+    "profile":"Profile",
+    "vi": "Vietnamese",
+    "en": "English"
+  },
+  "adminPage":{
+    "accountList": "Accounts",
+    "addUser": "Add User",
+    "Name": "Name",
+    "Email":"Email",
+    "cancel":"Cancel",
+    "submit":"Submit",
+    "Action":"Action",
+    "search":"Search",
+    "emailRequire":"Email is required",
+    "emailWrong":"Email wrong",
+    "nameRequire":"Name is required",
+    "addSuccess":"Add account successfully",
+    "accountExist":"Account exist"
+  },
+  "rulePage":{
+    "deleteSuccess": "Delete rule succesfully",
+    "deleteFail": "Delete rule fail",
+    "addRuleSuccess":"Add rule succesfully",
+    "addRuleFail":"Add rule fail",
+    "updateRuleSuccess":"Update rule succesfully",
+    "updateRuleFail":"Update rule fail",
+    "ruleName":"Rule name",
+    "addRule":"Add Rule",
+    "changeRule":"Change Rule",
+    "keyword":"Keyword",
+    "addKeywordHere":"Add keywords here",
+    "search":"Search",
+    "actions":"Actions",
+    "name": "Name",
+    "addActionsHere":"Add actions here"
+  },
+  "dashboard":{
+    "name": "Class Name",
+    "description": "Description",
+    "action": "Action",
+    "classroomList": "Class List",
+    "search": "Search",
+    "nameRequire": "Name is required",
+    "addSuccess": "Create Successful",
+    "copySuccess":"Copy ClassId to clipboard",
+    "classExist": "Class name is exist",
+    "createClass": "Create Class",
+    "cancel":"Cancel",
+    "submit":"Submit",
+    "wrongClassId": "ClassId is not exist",
+    "JoinClass": "Join a Class with ClassId",
+    "requireClassId": "ClassId is require",
+    "outClass": "Get out Class",
+    "sureToGetOut": "Are you sure to get out??"
+  }
+}

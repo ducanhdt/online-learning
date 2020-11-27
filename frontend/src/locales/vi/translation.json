@@ -1,0 +1,71 @@
+{
+  "loginpage": {
+    "login": "Đăng Nhập",
+    "email": "Địa chỉ email",
+    "password": "Mật khẩu",
+    "forgetPassword": "Quên mật khẩu?"
+  },
+
+  "topbar": {
+    "settings": "Cài đặt",
+    "account": "Tài khoản",
+    "logout": "Đăng xuất",
+    "language":"Ngôn ngữ",
+    "profile":"Tài khoản",
+    "vi": "Tiếng Việt",
+    "en": "Tiếng Anh"
+  },
+  "adminPage":{
+    "accountManagement": "Quản lý tài khoản",
+    "accountList": "Danh sách tài khoản",
+    "addUser": "Thêm tài khoản",
+    "Name": "Tên",
+    "Email":"Email",
+    "cancel":"Hủy",
+    "submit":"Lưu",
+    "Action":"Xóa",
+    "search":"Tìm kiếm",
+    "emailRequire":"Chưa nhập email",
+    "emailWrong":"Sai định dạng email",
+    "nameRequire":"Chưa nhập tên",
+    "addSuccess":"Thêm tài khoản thành công",
+    "accountExist":"Tài khoản đã tồn tại"
+  },
+  "rulePage":{
+    "deleteSuccess": "Xóa luật thành công",
+    "deleteFail": "Xóa luật thất bại",
+    "addRuleSuccess":"Thêm luật thành công",
+    "addRuleFail":"Thêm luật thất bại",
+    "updateRuleSuccess":"Cập nhật luật thành công",
+    "updateRuleFail":"Cập nhật luật thất bại",
+    "ruleName":"Tên luật",
+    "addRule":"Thêm luật",
+    "changeRule":"Sửa luật",
+    "keyword":"Từ khóa",
+    "addKeywordHere":"Thêm các từ khóa ở đây",
+    "actions":"Các hành động",
+    "search":"Tìm kiếm",
+    "name":"Tên",
+    "addActionsHere":"Thêm các hành động ở đây"
+  },
+  "dashboard":{
+    "name": "Tên lớp học",
+    "description": "Mô tả",
+    "action": "Hành động",
+    "classroomList": "Danh sách lớp học",
+    "search": "Tìm Kiếm",
+    "nameRequire": "Tên không được để trống",
+    "addSuccess": "Tạo lớp học thành công",
+    "copySuccess": "Sao chép ClassId vào bộ nhớ tạm",
+    "classExist": "Tên lớp học đã tồn tại",
+    "createClass": "Tạo mới lớp học",
+    "cancel":"Hủy bỏ",
+    "submit":"Gửi",
+    "wrongClassId": "ClassId không tồn tại",
+    "JoinClass": "Tham gia lớp học",
+    "requireClassId": "ClassId không được bỏ trống",
+    "outClass": "Ra khỏi lớp học",
+    "sureToGetOut": "Bạn chắc muốn rời khỏi lớp chứ"
+  }
+}
+

@@ -1,0 +1,41 @@
+version: "3"
+services:
+  frontend:
+    stdin_open: true
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - REACT_APP_API_DOMAIN=http://localhost:8080
+    volumes: 
+      - ./frontend:/app
+    depends_on:
+    - backend
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DATABASE=online_learning_backend
+      - ADMIN_NAME=ducanh
+      - ADMIN_EMAIL=ducanh.admin@gmail.com
+      - ADMIN_PASSWORD=123456
+      - JWT_SECRET_KEY=YiKi9EJgIYV7lS7iUskLZmt7xU9k0gAz
+      - JWT_EXPIRES_TIME=86400000
+      - PEPPER=wegkocgxjywglqrqzuefkxofxqtdkaqz
+    volumes: 
+      - ./backend:/app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes: 
+      - online-learning-db-anhdtd:/data/db
+volumes: 
+  online-learning-db-anhdtd:
