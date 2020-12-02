@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import API from '../../apis';
 
+import AddClassDialog from '../Dashboard/AddClass';
 import ListRule from './ListRule';
 import RuleDetail from './RuleDetail';
 
@@ -28,6 +29,7 @@ const ClassManager = () => {
   const [rules, setRules] = useState([]);
   const [activeRuleId, setActiveRuleId] = useState('');
   const [allRules, setAllRules] = useState([]);
+  const [openAdd,setOpenAdd] = useState(false);
 
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -55,7 +57,6 @@ const ClassManager = () => {
 
   const fetchRules = async () => {
     const { data } = await API.classroom.getAllClassroom(accessToken)
-    console.log(data);
     if (data.status === 1) {
       const { classrooms: resultRules } = data.results;
       setAllRules(resultRules);
@@ -70,14 +71,14 @@ const ClassManager = () => {
   };
 
   const handleAddRule = () => {
-    setActiveRuleId('');
+    setOpenAdd(true);
   };
 
   const handleDeleteRule = async (classroomId) => {
     const response = await API.classroom.deleteClassroom({classroomId},accessToken);
-    console.log(response);
+    console.log({response});
     if (response.status === 200) {
-      enqueueSnackbar(t('rulePage.deleteSuccess'), { variant: 'success' });
+      enqueueSnackbar(response.data.message, { variant: 'success' });
       fetchRules();
     } else {
       enqueueSnackbar(t('rulePage.deleteFail'), { variant: 'error' });
@@ -93,7 +94,15 @@ const ClassManager = () => {
   }, []);
 
   return (
+    
     <Grid container spacing={3}>
+      <AddClassDialog
+        open={openAdd}
+        accessToken={accessToken}
+        fetch={fetchRules}
+        setOpen={(value) => setOpenAdd(value)}
+      />
+
       <Grid item sm={4} sx={12}>
         <ListRule
           searchRuleType={searchRuleType}

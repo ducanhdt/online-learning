@@ -21,7 +21,7 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import SettingsIcon from '@material-ui/icons/Settings';
 import useStyles from './index.style';
 
-const menu = [
+const menuStudent = [
   {
     title: 'Dashboard',
     url: '/dashboard',
@@ -38,12 +38,24 @@ const menu = [
     icon: <SettingsIcon />,
   },
 ];
+const menuAdmin = [
+  {
+    title: 'Classes',
+    url: '/admins/classes',
+    icon: <HomeIcon />,
+  },
+  {
+    title: 'Account',
+    url: '/admins/accounts',
+    icon: <PermIdentityIcon />,
+  },
+];
 
-export default function Sidebar({ open, handleDrawerClose }) {
+export default function Sidebar({ open, handleDrawerClose, isAdmin }) {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
-
+  const menu = !isAdmin? menuStudent:menuAdmin;
   return (
     <Drawer
       variant="permanent"

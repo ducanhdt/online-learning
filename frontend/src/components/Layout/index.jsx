@@ -27,9 +27,10 @@ export default function Layout({ children }) {
         open={open}
         handleDrawerOpen={handleDrawerOpen}
       />
-      {!isAdmin && (
-        <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
-      )}
+      <Sidebar open={open} handleDrawerClose={handleDrawerClose} isAdmin={isAdmin} />
+      {/* {!isAdmin && (
+        <Sidebar open={open} handleDrawerClose={handleDrawerClose} isAdmin={isAdmin} />
+      )} */}
       <Content>{children}</Content>
     </div>
   );
