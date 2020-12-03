@@ -50,7 +50,7 @@ export async function getClassroom({classroomId},accessToken) {
   }
 }
 export async function deleteClassroom(
-  { classroomId, accountId },
+  { classroomId },
   accessToken,
 ) {
   try {

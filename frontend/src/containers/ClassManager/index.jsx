@@ -10,9 +10,9 @@ import API from '../../apis';
 
 import AddClassDialog from '../Dashboard/AddClass';
 import ListRule from './ListRule';
-import RuleDetail from './RuleDetail';
+import ClassDetail from './ClassDetail';
 
-const searchRuleTypes = [
+const searchClassTypes = [
   {
     label: 'name',
     value: 'name',
@@ -24,73 +24,74 @@ const searchRuleTypes = [
 ];
 
 const ClassManager = () => {
-  const [searchRuleType, setSearchRuleType] = useState(searchRuleTypes[0]);
-  const [searchRuleText, setSearchRuleText] = useState('');
-  const [rules, setRules] = useState([]);
-  const [activeRuleId, setActiveRuleId] = useState('');
-  const [allRules, setAllRules] = useState([]);
+  const [searchClassType, setSearchClassType] = useState(searchClassTypes[0]);
+  const [searchClassText, setSearchClassText] = useState('');
+  const [classs, setClasss] = useState([]);
+  const [activeClassId, setActiveClassId] = useState('');
+  const [allClasss, setAllClasss] = useState([]);
   const [openAdd,setOpenAdd] = useState(false);
 
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [debounceSearchRuleText] = useDebounce(searchRuleText, 300);
+  const [debounceSearchClassText] = useDebounce(searchClassText, 300);
   const { classId } = useParams();
   const { accessToken } = useSelector((state) => state.auth);
-
-  const handleChangeSearchRuleType = (value) => {
-    setSearchRuleType(
-      searchRuleTypes.filter((type) => type.value === value)[0],
+  
+  const handleChangeSearchClassType = (value) => {
+    setSearchClassType(
+      searchClassTypes.filter((type) => type.value === value)[0],
     );
   };
 
-  const handleChangeSearchRuleText = (value) => setSearchRuleText(value);
+  const handleChangeSearchClassText = (value) => setSearchClassText(value);
 
-  const searchRules = (keySearch, ruleSearch) => {
-    const type = searchRuleType.value;
-    setRules(
-      ruleSearch.filter((rule) => {
+  const searchClasss = (keySearch, classSearch) => {
+    const type = searchClassType.value;
+    setClasss(
+      classSearch.filter((rule) => {
         return new RegExp(keySearch).test(rule[type]);
       }),
     );
   };
 
-  const fetchRules = async () => {
+  const fetchClasss = async () => {
     const { data } = await API.classroom.getAllClassroom(accessToken)
     if (data.status === 1) {
-      const { classrooms: resultRules } = data.results;
-      setAllRules(resultRules);
-      searchRules(debounceSearchRuleText, resultRules);
-      setActiveRuleId('');
+      const { classrooms: resultClasss } = data.results;
+      console.log({resultClasss});
+      setAllClasss(resultClasss);
+      searchClasss(debounceSearchClassText, resultClasss);
+      setActiveClassId(resultClasss.length!=0?resultClasss[0].id:'');
     }
   };
 
-  const handleClickRule = async (ruleId) => {
-    console.log(ruleId);
-    setActiveRuleId(ruleId);
+  const handleClickClass = async (classId) => {
+    console.log(classId);
+    setActiveClassId(classId);
   };
 
-  const handleAddRule = () => {
+  const handleAddClass = () => {
     setOpenAdd(true);
   };
 
-  const handleDeleteRule = async (classroomId) => {
+  const handleDeleteClass = async (classroomId) => {
     const response = await API.classroom.deleteClassroom({classroomId},accessToken);
     console.log({response});
     if (response.status === 200) {
       enqueueSnackbar(response.data.message, { variant: 'success' });
-      fetchRules();
+      fetchClasss();
     } else {
       enqueueSnackbar(t('rulePage.deleteFail'), { variant: 'error' });
     }
   };
 
   useEffect(() => {
-    searchRules(debounceSearchRuleText, allRules);
-  }, [debounceSearchRuleText, searchRuleType]);
+    searchClasss(debounceSearchClassText, allClasss);
+  }, [debounceSearchClassText, searchClassType]);
 
   useEffect(() => {
-    fetchRules();
+    fetchClasss();
   }, []);
 
   return (
@@ -99,29 +100,27 @@ const ClassManager = () => {
       <AddClassDialog
         open={openAdd}
         accessToken={accessToken}
-        fetch={fetchRules}
+        fetch={fetchClasss}
         setOpen={(value) => setOpenAdd(value)}
       />
 
-      <Grid item sm={4} sx={12}>
+      <Grid item sm={3} sx={12}>
         <ListRule
-          searchRuleType={searchRuleType}
-          searchRuleText={searchRuleText}
-          searchRuleTypes={searchRuleTypes}
-          rules={rules}
-          handleChangeSearchRuleType={handleChangeSearchRuleType}
-          handleChangeSearchRuleText={handleChangeSearchRuleText}
-          handleClickRule={handleClickRule}
-          handleDeleteRule={handleDeleteRule}
-          handleAddRule={handleAddRule}
+          searchRuleType={searchClassType}
+          searchRuleText={searchClassText}
+          searchRuleTypes={searchClassTypes}
+          rules={classs}
+          handleChangeSearchRuleType={handleChangeSearchClassType}
+          handleChangeSearchRuleText={handleChangeSearchClassText}
+          handleClickRule={handleClickClass}
+          handleDeleteRule={handleDeleteClass}
+          handleAddRule={handleAddClass}
         />
       </Grid>
-      <Grid item sm={8} sx={12}>
-        <RuleDetail
-          activeRuleId={activeRuleId}
+      <Grid item sm={9} sx={12}>
+        <ClassDetail
+          classroomId={activeClassId}
           accessToken={accessToken}
-          botId={classId}
-          fetchRules={fetchRules}
         />
       </Grid>
     </Grid>

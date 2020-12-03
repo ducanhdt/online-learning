@@ -27,8 +27,8 @@ async function getClassroom(req, res) {
 }
 
 async function removeClassroom(req, res) {
-  const id = req.account._id;
-  const { classroomId } = req.body;
+  const { classroomId,accountId } = req.body;
+  const id = accountId?accountId:req.account._id;
   await accountService.removeClassroom({ id, classroomId });
   console.log("remove");
   await classService.deleteMember({classroomId,accountId:id})
@@ -36,8 +36,8 @@ async function removeClassroom(req, res) {
 }
 
 async function addClassroom(req, res) {
-  const id = req.account._id;
-  const { classroomId } = req.body;
+  const { classroomId,accountId } = req.body;
+  const id = accountId?accountId:req.account._id;
   await accountService.addClassroom({ classroomId, id });
 
   await classService.addMember({classroomId,accountId:id})

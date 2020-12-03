@@ -18,7 +18,7 @@ export async function addAccount({ name, email }, accessToken) {
     return error.response;
   }
 }
-export async function getAllAccount(accessToken) {
+export async function getAllAccount(accessToken,fields="") {
   try {
     const response = await API({
       method: 'GET',
@@ -26,6 +26,9 @@ export async function getAllAccount(accessToken) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      params:{
+        "fields":fields,
+      }
     });
     return response;
   } catch (error) {

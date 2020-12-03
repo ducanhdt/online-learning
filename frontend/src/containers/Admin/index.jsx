@@ -6,6 +6,8 @@ import { Typography, Button, Avatar, TablePagination } from '@material-ui/core';
 import api from '../../apis';
 import FormDialog from './AddAccount';
 import useStyles from './index.style';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
+import { useSnackbar } from 'notistack';
 
 export default function AccountList({ accessToken }) {
   const [open, setOpen] = useState(0);
@@ -23,9 +25,16 @@ export default function AccountList({ accessToken }) {
       );
     }
   };
+  const { enqueueSnackbar } = useSnackbar();
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const copyToClip = (dataToLoad) => {
+    navigator.clipboard.writeText(dataToLoad);
+    enqueueSnackbar(t('dashboard.copySuccess'), { variant: 'success' });
+  };
+
   const handleDelete = async (id) => {
     const { data } = await api.admin.deleteAccount(
       { deleteAccountId: id },
@@ -57,9 +66,19 @@ export default function AccountList({ accessToken }) {
       title: t('adminPage.Action'),
       key: 'action',
       render: (record) => (
-        <Button onClick={() => handleDelete(record.id)}>
-          <Delete color="error" />
-        </Button>
+        <div>
+          <Button
+            onClick={() => {
+              copyToClip(record.id);
+            }}
+          >
+            <FilterNoneIcon />
+          </Button>
+
+          <Button onClick={() => handleDelete(record.id)}>
+            <Delete color="error" />
+          </Button>
+        </div>
       ),
     },
   ];

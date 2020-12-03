@@ -63,7 +63,7 @@ export async function joinClassroom({classroomId},accessToken) {
   }
 }
 
-export async function outClassroom({classroomId},accessToken) {
+export async function outClassroom({classroomId,accountId},accessToken) {
   // get out accout from class
   try {
     console.log(classroomId);
@@ -71,7 +71,7 @@ export async function outClassroom({classroomId},accessToken) {
       method: 'DELETE',
       url: `account`,
       headers: { Authorization: `Bearer ${accessToken}` },
-      data: {classroomId},
+      data: {classroomId,accountId},
     });
     return response;
   } catch (error) {

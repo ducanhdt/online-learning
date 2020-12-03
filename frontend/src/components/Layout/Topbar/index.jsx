@@ -93,7 +93,7 @@ export default function Topbar({ isAdmin, open, handleDrawerOpen }) {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open && !isAdmin,
+          [classes.appBarShift]: open,// && !isAdmin,
         })}
       >
         <Toolbar>

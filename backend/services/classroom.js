@@ -30,7 +30,7 @@ const findById = async ({classroomId }) => {
   let classroom = await Classroom.findById(classroomId);
   if (!classroom) throw new CustomError(errorCodes.TEMPLATE_NOT_EXISTS);
   classroom = await classroom
-  .populate({ path: 'member', select: 'name avatar' })
+  .populate({ path: 'member', select: 'name avatar email' })
   .execPopulate();
 
 

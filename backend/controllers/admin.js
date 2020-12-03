@@ -29,6 +29,7 @@ const getAllAccount = async (req, res) => {
   if (offset) query.offset = parseInt(offset, 10);
   if (limit) query.limit = parseInt(limit, 10);
   if (sort) query.sort = sort.split(',');
+  console.log(fields);
   Object.keys(req.query)
     .filter(
       q => ['search', 'fields', 'offset', 'limit', 'sort'].indexOf(q) === -1,

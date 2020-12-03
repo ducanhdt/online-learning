@@ -65,11 +65,12 @@ const updateClassroom = async (req, res) => {
 
 const deleteClassroom = async (req, res) => {
   const accountId = req.account._id;
+  const isAdmin = req.account.isAdmin;
   const { classroomId } = req.params;
   const classroom = await classroomService.findById({
     classroomId,
   });
-  if (String(classroom.createdBy.accountId) == String(accountId)) {
+  if (String(classroom.createdBy.accountId) == String(accountId)||isAdmin) {
     await classroomService.deleteClassroom({
       classroomId,
     });
