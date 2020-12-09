@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from './Participant';
+import ChatScreen from '../Chat/ChatScreen'
 
 const Room = ({ roomName, token, handleLogout }) => {
   const [room, setRoom] = useState(null);
