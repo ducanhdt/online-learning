@@ -88,16 +88,7 @@ const Classroom = () => {
           <Button onClick={handleSubmit}>Get in to Chat Room</Button>
         </Grid>
         <Grid item sm={4} sx={12}>
-          <BrowserRouter>
-            <div className="container">
-              <Header />
-              <div className="main-content">
-                <Switch>
-                  <Route component={File} path="/" exact={true} />
-                </Switch>
-              </div>
-            </div>
-          </BrowserRouter>
+        <File/>
         </Grid>
         {/* <Grid item sm={8} sx={12}>
         <div>Token</div>

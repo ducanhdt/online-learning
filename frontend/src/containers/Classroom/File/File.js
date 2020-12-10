@@ -5,7 +5,7 @@ import axios from 'axios';
 import API from '../../../apis';
 
 
-const File = (props) => {
+const File = () => {
   const [file, setFile] = useState(null); // state for storing actual image
   const [previewSrc, setPreviewSrc] = useState(''); // state for storing previewImage
   const [state, setState] = useState({
@@ -53,18 +53,15 @@ const File = (props) => {
           formData.append('file', file);
           formData.append('title', title);
           formData.append('description', description);
-  
+          console.log(formData);
           setErrorMsg('');
-          await API.file.getVideoToken(formData,{
+
+          const res = await axios.post(`http://localhost:8080/api/v1/upload`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           });
-          await axios.post(`http://localhost:8080/upload`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
+          console.log(res.data);
         } else {
           setErrorMsg('Please select a file to add.');
         }

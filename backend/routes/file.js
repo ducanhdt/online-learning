@@ -40,7 +40,7 @@ const upload = multer({
 router.post(
     '/upload',
     upload.single('file'),
-    auth,
+    // auth,
     asyncMiddleware(fileController.uploadFile),
 );
 
