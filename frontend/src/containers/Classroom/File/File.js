@@ -76,7 +76,7 @@ const File = () => {
   return (
     <React.Fragment>
       <Form className="search-form" onSubmit={handleOnSubmit}>
-        {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+        {/* {errorMsg && <p className="errorMsg">{errorMsg}</p>} */}
         <Row>
           <Col>
             <Form.Group controlId="title">
