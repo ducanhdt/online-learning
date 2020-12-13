@@ -46,14 +46,14 @@ router.post(
 );
 
 router.get(
-    '/getAllFiles', 
-    auth,
+    '/getAllFiles/:classid', 
+    //auth,
     asyncMiddleware(fileController.getAllFiles),
 );
 
 router.get(
     '/download/:id',  
-    auth,
+    //auth,
     asyncMiddleware(fileController.downloadFile),
 );
 

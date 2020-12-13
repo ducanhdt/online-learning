@@ -5,7 +5,7 @@ import axios from 'axios';
 import API from '../../../apis';
 
 
-const File = () => {
+const File = ({classId}) => {
   const [file, setFile] = useState(null); // state for storing actual image
   const [previewSrc, setPreviewSrc] = useState(''); // state for storing previewImage
   const [state, setState] = useState({
@@ -49,14 +49,16 @@ const File = () => {
       const { title, description } = state;
       if (title.trim() !== '' && description.trim() !== '') {
         if (file) {
+          
           const formData = new FormData();
           formData.append('file', file);
           formData.append('title', title);
           formData.append('description', description);
+          formData.append('classroomId', classId);
           console.log(formData);
           setErrorMsg('');
-
-          const res = await axios.post(`http://localhost:8080/api/v1/upload`, formData, {
+          console.log(classId);
+          const res = await axios.post(`http://localhost:8080/api/v1/upload`,  formData , {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
