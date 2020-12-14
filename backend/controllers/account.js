@@ -1,5 +1,6 @@
 const accountService = require('../services/account.js');
 const classService = require('../services/classroom')
+const Account = require('../models/account');
 
 const changePassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
@@ -36,8 +37,14 @@ async function removeClassroom(req, res) {
 }
 
 async function addClassroom(req, res) {
-  const { classroomId,accountId } = req.body;
-  const id = accountId?accountId:req.account._id;
+  const { classroomId,email } = req.body;
+  const account = await Account.findOne({ email });
+  if (!account)
+    throw new CustomError(
+      errorCodes.ACCOUNT_NOT_EXISTS,
+      'Account is not exist.',
+    );
+  const id = account?account._id:req.account._id;
   await accountService.addClassroom({ classroomId, id });
 
   await classService.addMember({classroomId,accountId:id})

@@ -48,14 +48,14 @@ export async function getClassroom(accessToken) {
   }
 }
 
-export async function joinClassroom({classroomId},accessToken) {
+export async function joinClassroom({classroomId,email},accessToken) {
   // add account to class
   try {
     const response = await API({
       method: 'POST',
       url: `account`,
       headers: { Authorization: `Bearer ${accessToken}` },
-      data: {classroomId},
+      data: {classroomId,email},
     });
     return response;
   } catch (error) {

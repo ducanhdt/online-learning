@@ -59,7 +59,6 @@ const ClassManager = () => {
     const { data } = await API.classroom.getAllClassroom(accessToken)
     if (data.status === 1) {
       const { classrooms: resultClasss } = data.results;
-      console.log({resultClasss});
       setAllClasss(resultClasss);
       searchClasss(debounceSearchClassText, resultClasss);
       setActiveClassId(resultClasss.length!=0?resultClasss[0].id:'');
@@ -77,7 +76,6 @@ const ClassManager = () => {
 
   const handleDeleteClass = async (classroomId) => {
     const response = await API.classroom.deleteClassroom({classroomId},accessToken);
-    console.log({response});
     if (response.status === 200) {
       enqueueSnackbar(response.data.message, { variant: 'success' });
       fetchClasss();

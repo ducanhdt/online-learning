@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import api from '../../../apis';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
-// import Autosuggest from 'react-autosuggest';
+import Autosuggest from 'react-autosuggest';
 
 
 
@@ -39,7 +39,7 @@ function renderSuggestion(suggestion) {
   );
 }
 
-export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
+export default function AddMemberDialog({ accessToken, open, setOpen, fetch, classroomId }) {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const [emails,setEmails] = useState([])
@@ -47,7 +47,7 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
   const [suggestions, setSuggestions] = useState([]);
   const fetchEmails = async () => {
     const response = await api.admin.getAllAccount(accessToken,"email");
-    console.log(response);
+    console.log("email list",response.data.results.accounts);
     setEmails(response.data.results.accounts)
   };
 
@@ -56,10 +56,10 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
   }, []);
 
   
-
   const onChange = (event, { newValue, method }) => {
    setEmail(newValue);
   };
+
   const inputProps = {
     placeholder: 'Email',
     value:email,
@@ -68,7 +68,8 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
 
 
   const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value))
+    console.log("value",value);
+    setSuggestions(getSuggestions(value,emails))
   };
 
   const onSuggestionsClearRequested = () => {
@@ -76,9 +77,10 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
   };
 
   const handleSubmit = async () => {
+    console.log( { classroomId, email});
     if (email.length == 0) return;
     const { data } = await api.account.joinClassroom(
-      { classroomId: email },
+      { classroomId, email },
       accessToken,
     );
     console.log({ data });
@@ -106,15 +108,14 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
           {t('dashboard.JoinClass')}
         </DialogTitle>
         <DialogContent>
-          {/* <Autosuggest
+          <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
-          /> */}
-          );
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

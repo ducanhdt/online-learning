@@ -112,6 +112,7 @@ export default function ClassDetail({ accessToken, classroomId }) {
         open={openAdd}
         accessToken={accessToken}
         fetch={fetchClassrooms}
+        classroomId={classroomId}
         setOpen={(value) => setOpenAdd(value)}
       />
       <MaterialTable
@@ -128,12 +129,6 @@ export default function ClassDetail({ accessToken, classroomId }) {
             isFreeAction: true,
             onClick: (event) => handleOpenAdd(),
           },
-          // {
-          //   icon: MeetingRoomIcon,
-          //   tooltip: 'JoinClass',
-          //   isFreeAction: true,
-          //   onClick: (event) => handleOpenJoin(),
-          // },
         ]}
         localization={{ toolbar: { searchPlaceholder: t('dashboard.search') } }}
       />
