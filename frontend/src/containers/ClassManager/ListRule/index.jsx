@@ -69,7 +69,7 @@ const ListRule = ({
         startIcon={<Add />}
         fullWidth
       >
-        {t('rulePage.addRule')}
+        Create Classroom
       </Button>
       {rules.length ? (
         <List>

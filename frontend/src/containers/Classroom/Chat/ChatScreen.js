@@ -172,6 +172,7 @@ const ChatScreen = ({ email, room }) => {
               >
                 <Send style={styles.sendIcon} />
               </IconButton>
+              <IconButton onClick={()=>console.log(messages)}>Get Chat Info</IconButton>
             </Grid>
           </Grid>
         </Grid>

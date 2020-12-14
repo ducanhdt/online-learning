@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import api from '../../../apis';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
-// import Autosuggest from 'react-autosuggest';
+import Autosuggest from 'react-autosuggest';
 
 
 
@@ -106,15 +106,14 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch }) {
           {t('dashboard.JoinClass')}
         </DialogTitle>
         <DialogContent>
-          {/* <Autosuggest
+          <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
-          /> */}
-          );
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
