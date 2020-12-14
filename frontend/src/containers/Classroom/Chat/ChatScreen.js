@@ -27,7 +27,6 @@ const ChatScreen = ({ email, room }) => {
   const [loading, setLoading] = useState(false);
   const [channel, setChannel] = useState(null);
 
-  console.log('messages', messages);
   const scrollDiv = useRef(null);
 
   const getToken = async (email) => {
@@ -44,7 +43,9 @@ const ChatScreen = ({ email, room }) => {
   };
 
   const handleMessageAdded = (message) => {
-    setMessages(!!messages ? [...messages, message] : [message]);
+    // const mess= messages
+    console.log('handleMessageAdded', messages.length);
+    setMessages([...messages, message]);
     scrollToBottom();
   };
 
@@ -77,16 +78,20 @@ const ChatScreen = ({ email, room }) => {
       const token = await getToken(email);
       client.updateToken(token);
     });
-
+    let oldMessages = [];
     client.on('channelJoined', async (channel) => {
       // getting list of all messages since this is an existing channel
-      const messagesss = await channel.getMessages();
-      // debugger;
-      console.log('channelJoined', messagesss);
 
-      if (messagesss.items.length)
-        setMessages([...messages, ...messagesss.items]);
-      scrollToBottom();
+      const oldMess = await channel.getMessages();
+      // debugger;
+
+      if (oldMess.items.length) {
+        oldMessages = [...oldMessages, ...oldMess.items];
+        // setMessages([...oldMessages, ...oldMess.items]);
+        console.log('channelJoined',  oldMessages);
+        setMessages(oldMessages);
+        scrollToBottom();
+      }
     });
 
     try {
@@ -123,7 +128,7 @@ const ChatScreen = ({ email, room }) => {
   };
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="md" style={styles.main}>
       <Backdrop open={loading} style={{ zIndex: 99999 }}>
         <CircularProgress style={{ color: 'white' }} />
       </Backdrop>
@@ -139,8 +144,8 @@ const ChatScreen = ({ email, room }) => {
         <Grid item style={styles.gridItemChatList} ref={scrollDiv}>
           <List dense={true}>
             {messages &&
-              messages.map((message) => (
-                <ChatItem key={message.index} message={message} email={email} />
+              messages.map((message,index) => (
+                <ChatItem key={index} message={message} email={email} />
               ))}
           </List>
         </Grid>
@@ -176,6 +181,7 @@ const ChatScreen = ({ email, room }) => {
 };
 
 const styles = {
+  main:{paddingLeft:0,paddingRight:0},
   textField: { width: '100%', borderWidth: 0, borderColor: 'transparent' },
   textFieldContainer: { flex: 1, marginRight: 12 },
   gridItem: { paddingTop: 12, paddingBottom: 12 },
@@ -183,7 +189,7 @@ const styles = {
   gridItemMessage: { marginTop: 12, marginBottom: 12 },
   sendButton: { backgroundColor: '#3f51b5' },
   sendIcon: { color: 'white' },
-  mainGrid: { paddingTop: 100, borderWidth: 1 },
+  mainGrid: { borderWidth: 1 },
 };
 
 export default ChatScreen;

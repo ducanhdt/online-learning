@@ -70,7 +70,7 @@ const Classroom = () => {
               handleLogout={hangleGetOut}
             />
           </Grid>
-          <Grid item sm={4} sx={12}>
+          <Grid style={styles.chat} item sm={4} sx={12}>
             <ChatScreen email={username} room={classroomId} />
           </Grid>
         </Grid>
@@ -79,8 +79,13 @@ const Classroom = () => {
   } else {
     render = (
       <Grid container spacing={3}>
-        <Grid item sm={4} sx={12}>
+        <Grid item sm={8} sx={12}>
           <Button onClick={handleSubmit}>Get in to Chat Room</Button>
+          <ChatScreen
+            style={styles.chat}
+            email={username}
+            room={classroomId}
+          />
         </Grid>
         <Grid item sm={4} sx={12}>
           <File />
@@ -94,6 +99,21 @@ const Classroom = () => {
   }
 
   return render;
+};
+
+
+
+
+const styles = {
+  chat : {
+    border: '2px solid #29d',
+    borderRadius: '20px',
+    position: 'fixed',
+    bottom: '10px',
+    right: '0',
+    width: '28%',
+    padding: '7px',
+  }
 };
 
 export default Classroom;

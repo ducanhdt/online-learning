@@ -9,7 +9,7 @@ const Room = ({ roomName, token, handleLogout }) => {
   const [participants, setParticipants] = useState([]);
   const [isVideoOn, setVideoOn] = useState(false);
   const [isMute, setMute] = useState(false);
-  const [isShareScreen,setShareScreen] = useState(false)
+  const [isShareScreen, setShareScreen] = useState(false);
   // const [roomConfig, setRoomConfig] = useState({
   //   name: roomName,
   //   // video: isVideoOn?{width:640}:false,
@@ -22,30 +22,31 @@ const Room = ({ roomName, token, handleLogout }) => {
     const participantConnected = (participant) => {
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
     };
-    
+
     const participantDisconnected = (participant) => {
       setParticipants((prevParticipants) =>
-      prevParticipants.filter((p) => p !== participant),
+        prevParticipants.filter((p) => p !== participant),
       );
     };
-    let roomConfig= {}
-    if (!isVideoOn){
-      roomConfig={
+    let roomConfig = {};
+    if (!isVideoOn) {
+      roomConfig = {
         name: roomName,
-        video:false,
-      }
-    }else{
-      if (isShareScreen){
+        video: false,
+      };
+    } else {
+      if (isShareScreen) {
         const stream = await navigator.mediaDevices.getDisplayMedia();
         const screenTrack = new Video.LocalVideoTrack(stream.getTracks()[0]);
-        roomConfig={
+        roomConfig = {
           name: roomName,
           tracks: [screenTrack],
-        }
-      }else{
-        roomConfig={
-          name: roomName,  
-        }
+        };
+      } else {
+        roomConfig = {
+          name: roomName,
+          video:{height:500}
+        };
       }
     }
     Video.connect(token, roomConfig).then((room) => {
@@ -77,7 +78,7 @@ const Room = ({ roomName, token, handleLogout }) => {
 
   useEffect(() => {
     myFunction();
-  }, [roomName, token, isVideoOn, isMute,isShareScreen]);
+  }, [roomName, token, isVideoOn, isMute, isShareScreen]);
 
   const remoteParticipants = participants.map((participant) => (
     <Participant key={participant.sid} participant={participant} />
@@ -92,28 +93,32 @@ const Room = ({ roomName, token, handleLogout }) => {
   const handleTurnMute = () => {
     setMute(!isMute);
   };
-  const handleShareScreen = () =>{
-    setShareScreen(!isShareScreen)
-  }
+  const handleShareScreen = () => {
+    setShareScreen(!isShareScreen);
+  };
 
   return (
     <div className="room">
-      <h2>Room: {roomName}</h2>
+      {/* <h2>Room: {roomName}</h2> */}
+      <div style={{ height: 600 }} className="local-participant">
+        {room &&
+         (
+          <Participant
+            key={room.localParticipant.sid}
+            participant={room.localParticipant}
+            inden={true}
+          />
+        )}
+      </div>
       <button onClick={handleLogout}>Log out</button>
       <button onClick={handleLog}>Log info</button>
       <button onClick={handleTurnVideo}>
         {isVideoOn ? 'Turn off video' : 'Turn on Video'}
       </button>
       <button onClick={handleTurnMute}>{isVideoOn ? 'Unmute' : 'Mute'}</button>
-      <button onClick={handleShareScreen}>{isShareScreen ? 'Stop Share Screen' : 'Share Screen'}</button>
-      <div style={{ height: 800 }} className="local-participant">
-        {room && (
-          <Participant
-            key={room.localParticipant.sid}
-            participant={room.localParticipant}
-          />
-        )}
-      </div>
+      <button onClick={handleShareScreen}>
+        {isShareScreen ? 'Stop Share Screen' : 'Share Screen'}
+      </button>
       <h3>Remote Participants</h3>
       <div className="remote-participants">{remoteParticipants}</div>
     </div>
