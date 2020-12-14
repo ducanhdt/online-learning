@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { useDebounce } from 'use-debounce';
 
 import Room from './VideoRoom/Room';
-import File from './File/File'
-import Header from './File/Header'
-import ChatScreen from './Chat/ChatScreen'
+import File from './File/File';
+import FileList from './File/FileList';
+import Header from './File/Header';
+import ChatScreen from './Chat/ChatScreen';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
@@ -20,37 +21,43 @@ const Classroom = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state) => state.auth);
   const [inRoom, setInRoom] = useState(false);
+  const [inList,setInList]=useState(false);
   const [videoToken, setVideoToken] = useState('hello');
   let className, member;
 
   const { name: username } = useSelector((state) => state.auth);
 
-
   const hangleGetOut = () => {
-    setVideoToken("")
+    setVideoToken('');
     setInRoom(false);
   };
 
   const getClassInfo = async () => {
-    const response = await API.classroom.getClassroom({ classroomId }, accessToken)
-    className = response.data.result.name
-    member = response.data.result.member
-    console.log({ className, member, username });
+    const response = await API.classroom.getClassroom(
+      { classroomId },
+      accessToken,
+    );
+    className = response.data.result.name;
+    member = response.data.result.member;
+    // console.log({ className, member, username });
     return className;
-  }
+  };
 
   useEffect(() => {
     getClassInfo();
   }, []);
 
-  const handleSubmit = async () => {
-
+  const handleSubmit = async (bool) => {
     const response = await API.video.getVideoToken(className, username);
     if (response.status == 200) {
       let { token } = response.data;
       setVideoToken(token);
+      if(bool==0){
       setInRoom(true);
-      console.log(token);
+      }else{
+        setInList(true);
+      }
+      // console.log({token,username,classroomId});
       enqueueSnackbar('Success', { variant: 'success' });
     } else {
       console.log(response);
@@ -62,52 +69,65 @@ const Classroom = () => {
     render = (
       <div>
         <Grid container spacing={3}>
-          <Grid item sm={8} sx={12} >
+          <Grid item sm={8} sx={12}>
             <Room
               roomName={className}
               token={videoToken}
               handleLogout={hangleGetOut}
             />
           </Grid>
-          <Grid item sm={4} sx={12}>
-            < ChatScreen
-              email={username}
-              room={classroomId}
-            />
-
+          <Grid style={styles.chat} item sm={4} sx={12}>
+            <ChatScreen email={username} room={classroomId} />
           </Grid>
-
         </Grid>
       </div>
-
     );
-  } else {
+  }else if(inList){
+    render = (
+      <div>
+        <Grid container spacing={3}>
+          <Grid item sm={8} sx={12}>
+            <FileList
+            classId={classroomId}/>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }else {
     render = (
       <Grid container spacing={3}>
         <Grid item sm={4} sx={12}>
-          <Button onClick={handleSubmit}>Get in to Chat Room</Button>
+          <Button onClick={() => handleSubmit(0)}>Get in to Chat Room</Button>
+          <Button onClick={() => handleSubmit(1)}>FileList</Button>
         </Grid>
         <Grid item sm={4} sx={12}>
-          <BrowserRouter>
-            <div className="container">
-              <Header />
-              <div className="main-content">
-                <Switch>
-                  <Route component={File} path="/" exact={true} />
-                </Switch>
-              </div>
-            </div>
-          </BrowserRouter>
+          <File 
+          classId={classroomId}/>
         </Grid>
         {/* <Grid item sm={8} sx={12}>
         <div>Token</div>
         <div>{videoToken.substr(1, 20)}</div>
       </Grid> */}
       </Grid>
-    )
+    );
   }
 
   return render;
+};
+
+
+
+
+const styles = {
+  chat : {
+    border: '2px solid #29d',
+    borderRadius: '20px',
+    position: 'fixed',
+    bottom: '10px',
+    right: '0',
+    width: '28%',
+    padding: '7px',
+  }
 };
 
 export default Classroom;

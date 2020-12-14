@@ -5,7 +5,7 @@ import axios from 'axios';
 import API from '../../../apis';
 
 
-const File = (props) => {
+const File = ({classId}) => {
   const [file, setFile] = useState(null); // state for storing actual image
   const [previewSrc, setPreviewSrc] = useState(''); // state for storing previewImage
   const [state, setState] = useState({
@@ -49,22 +49,21 @@ const File = (props) => {
       const { title, description } = state;
       if (title.trim() !== '' && description.trim() !== '') {
         if (file) {
+          
           const formData = new FormData();
           formData.append('file', file);
           formData.append('title', title);
           formData.append('description', description);
-  
+          formData.append('classroomId', classId);
+          console.log(formData);
           setErrorMsg('');
-          await API.file.getVideoToken(formData,{
+          console.log(classId);
+          const res = await axios.post(`http://localhost:8080/api/v1/upload`,  formData , {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           });
-          await axios.post(`http://localhost:8080/upload`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
+          console.log(res.data);
         } else {
           setErrorMsg('Please select a file to add.');
         }
@@ -79,7 +78,7 @@ const File = (props) => {
   return (
     <React.Fragment>
       <Form className="search-form" onSubmit={handleOnSubmit}>
-        {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+        {/* {errorMsg && <p className="errorMsg">{errorMsg}</p>} */}
         <Row>
           <Col>
             <Form.Group controlId="title">

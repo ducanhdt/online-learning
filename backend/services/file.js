@@ -24,25 +24,28 @@ const createFile = async ({file}) => {
   return classroom;
 };
 
-const findAllFilesByClassId = async ({}) => {
-
-  let file = await File.find({});
-  const sortedByCreationDate = files.sort(
-    (a, b) => b.createdAt - a.createdAt
-  );
+const findAllFilesByClassId = async ({classId}) => {
+  console.log("service get file");
+  let file = await File.find({class:classId});
+  console.log(file);
+  // const sortedByCreationDate = files.sort(
+  //   (a, b) => b.createdAt - a.createdAt
+  // );
+  // console.log(sortedByCreationDate);
 //   if (!classroom) throw new CustomError(errorCodes.TEMPLATE_NOT_EXISTS);
 //   classroom = await classroom
 //   .populate({ path: 'member', select: 'name avatar email' })
 //   .execPopulate();
 
 
-  return sortedByCreationDate;
+  return file;
 };
 
-const finfFileById = async ({fileId})=>{
-
+const findFileById = async ({fileId})=>{
+    //console.log(fileId);
     let file= await File.findById(fileId);
-    if (!file) throw new CustomError(errorCodes.TEMPLATE_NOT_EXISTS);
+    //console.log(file)
+    //if (!file) throw new CustomError(errorCodes.TEMPLATE_NOT_EXISTS);
     // file = await file
     // .populate({ path: 'member', select: 'name avatar email' })
     // .execPopulate();
@@ -54,5 +57,5 @@ const finfFileById = async ({fileId})=>{
 module.exports = {
     createFile,
     findAllFilesByClassId,
-    finfFileById,
+    findFileById,
 };

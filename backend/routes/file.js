@@ -2,6 +2,7 @@
 // const express = require('express');
 const multer = require('multer');
 // const File = require('../model/file');
+const CustomError = require('../errors/CustomError');
 const router = require('express').Router();
 const asyncMiddleware = require('../middlewares/async');
 const auth = require('../middlewares/auth');
@@ -26,10 +27,10 @@ const upload = multer({
     fileSize: 1000000 // max file size 1MB = 1000000 bytes
   },
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpeg|jpg|png|pdf|doc|docx|xlsx|xls)$/)) {
+    if (!file.originalname.match(/\.(jpeg|jpg|png|pdf|doc|docx|xlsx|xls|txt)$/)) {
       return cb(
-        new Error(
-          'only upload files with jpg, jpeg, png, pdf, doc, docx, xslx, xls format.'
+        new CustomError(
+          'only upload files with jpg, jpeg, png, pdf, doc, docx, xslx, xls,txt format.'
         )
       );
     }
@@ -40,19 +41,19 @@ const upload = multer({
 router.post(
     '/upload',
     upload.single('file'),
-    auth,
+    // auth,
     asyncMiddleware(fileController.uploadFile),
 );
 
 router.get(
-    '/getAllFiles', 
-    auth,
+    '/getAllFiles/:classid', 
+    //auth,
     asyncMiddleware(fileController.getAllFiles),
 );
 
 router.get(
     '/download/:id',  
-    auth,
+    //auth,
     asyncMiddleware(fileController.downloadFile),
 );
 
