@@ -5,6 +5,7 @@ import { useDebounce } from 'use-debounce';
 
 import Room from './VideoRoom/Room';
 import File from './File/File';
+import FileList from './File/FileList';
 import Header from './File/Header';
 import ChatScreen from './Chat/ChatScreen';
 import { Button, Grid, TextField } from '@material-ui/core';
@@ -20,6 +21,7 @@ const Classroom = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state) => state.auth);
   const [inRoom, setInRoom] = useState(false);
+  const [inList,setInList]=useState(false);
   const [videoToken, setVideoToken] = useState('hello');
   let className, member;
 
@@ -45,12 +47,16 @@ const Classroom = () => {
     getClassInfo();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (bool) => {
     const response = await API.video.getVideoToken(className, username);
     if (response.status == 200) {
       let { token } = response.data;
       setVideoToken(token);
+      if(bool==0){
       setInRoom(true);
+      }else{
+        setInList(true);
+      }
       // console.log({token,username,classroomId});
       enqueueSnackbar('Success', { variant: 'success' });
     } else {
@@ -76,19 +82,27 @@ const Classroom = () => {
         </Grid>
       </div>
     );
-  } else {
+  }else if(inList){
+    render = (
+      <div>
+        <Grid container spacing={3}>
+          <Grid item sm={8} sx={12}>
+            <FileList
+            classId={classroomId}/>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }else {
     render = (
       <Grid container spacing={3}>
-        <Grid item sm={8} sx={12}>
-          <Button onClick={handleSubmit}>Get in to Chat Room</Button>
-          <ChatScreen
-            style={styles.chat}
-            email={username}
-            room={classroomId}
-          />
+        <Grid item sm={4} sx={12}>
+          <Button onClick={() => handleSubmit(0)}>Get in to Chat Room</Button>
+          <Button onClick={() => handleSubmit(1)}>FileList</Button>
         </Grid>
         <Grid item sm={4} sx={12}>
-          <File />
+          <File 
+          classId={classroomId}/>
         </Grid>
         {/* <Grid item sm={8} sx={12}>
         <div>Token</div>
