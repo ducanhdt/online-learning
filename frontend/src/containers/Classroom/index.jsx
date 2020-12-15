@@ -8,48 +8,43 @@ import Box from '@material-ui/core/Box';
 import Room from './VideoRoom/Room';
 import File from './File/File';
 import FileList from './File/FileList';
-import TweetForm from './Tweet/TweetForm'
-import TweetList from './Tweet/TweetList'
+import TweetForm from './Tweet/TweetForm';
+import TweetList from './Tweet/TweetList';
 import ChatScreen from './Chat/ChatScreen';
-import { Avatar, Button, Grid, TextField , Input} from '@material-ui/core';
+import { Avatar, Button, Grid, TextField, Input } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import API from '../../apis';
 import { AccessTokenNotYetValidError } from 'twilio-video';
-import Post from './Post'
+import Post from './Post';
 import { PlayCircleFilledWhite } from '@material-ui/icons';
 import axios from 'axios';
 
 const useStyles = makeStyles({
   form: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-around",
-    padding: "20px 0",
-    
-
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    padding: '20px 0',
   },
   input: {
-    width: "100%"
+    width: '100%',
   },
   fixedPost: {
-    position: "fixed",
+    position: 'fixed',
     bottom: 0,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 10,
-    width: 500
-    
+    width: 500,
   },
   marginBottom: {
-    marginBottom: 50
-  }
+    marginBottom: 50,
+  },
 });
 
 const Classroom = () => {
   const { classroomId } = useParams();
-  const [state, setState] = useState({
-    tweet: ''
-});
+  const [tweet,setTweet] = useState("");
   const classes = useStyles();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -59,8 +54,8 @@ const Classroom = () => {
   const [member, setMember] = useState([]);
 
   const [videoToken, setVideoToken] = useState('hello');
-  const [inList,setInList]=useState(false);
-  const [checkPost,setCheck] =useState(0);
+  const [inList, setInList] = useState(false);
+  const [checkPost, setCheck] = useState(0);
   const [tweetList, setTweetList] = useState([]);
   const { name: username } = useSelector((state) => state.auth);
   const [errorMsg, setErrorMsg] = useState('');
@@ -81,31 +76,33 @@ const Classroom = () => {
   };
 
   const handleOnSubmit = async (event) => {
-    console.log("hello")
+    console.log('hello');
     event.preventDefault();
     try {
       // const { tweet } = state;
-      console.log(state.tweet)
-      if (state.tweet.trim() !== '' ) {
-        console.log("hello")
-          console.log(state.tweet);
-          setErrorMsg('');
+      console.log(tweet);
+      if (tweet.trim() !== '') {
+        console.log('hello');
+        console.log(tweet);
+        setErrorMsg('');
         //   console.log(classId);
-          const res = await axios.post(`http://localhost:8080/api/v1/tweet`,{
-            room : classroomId,
+        const res = await axios
+          .post(`http://localhost:8080/api/v1/tweet`, {
+            room: classroomId,
             user: username,
-            tweet: state.tweet
+            tweet: tweet,
           })
-          .then((response) => {
-            console.log(response);
-            setCheck(checkPost+1);
-            setState({
-              tweet:''
-            });
-          }, (error) => {
-            console.log(error);
-          });
-          
+          .then(
+            (response) => {
+              console.log(response);
+              setCheck(checkPost + 1);
+              getTweetList()
+              setTweet('')
+            },
+            (error) => {
+              console.log(error);
+            },
+          );
       } else {
         setErrorMsg('Please enter all the field values.');
       }
@@ -114,21 +111,17 @@ const Classroom = () => {
     }
   };
 
-
-const handleInputChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
-    });
-    console.log(state)
+  const handleInputChange = (event) => {
+    setTweet(event.target.value);
   };
   const getTweetList = async () => {
     try {
-      
-      const { data } = await axios.get(`http://localhost:8080/api/v1/getAllTweets/${classroomId}`);
+      const { data } = await axios.get(
+        `http://localhost:8080/api/v1/getAllTweets/${classroomId}`,
+      );
       console.log(data.result);
       setErrorMsg('');
-      
+
       // setTweetList(data.result.map((tweets) => ({
       //   ...tweets,
       //   key:tweets.id,
@@ -142,7 +135,6 @@ const handleInputChange = (event) => {
   };
 
   useEffect(() => {
-    
     getTweetList();
     getClassInfo();
     // const interval=setInterval(getTweetList,10000)
@@ -182,8 +174,7 @@ const handleInputChange = (event) => {
       <div>
         <Grid container spacing={3}>
           <Grid item sm={12} sx={12}>
-            <FileList
-            classId={classroomId}/>
+            <FileList classId={classroomId} />
           </Grid>
         </Grid>
       </div>
@@ -191,34 +182,42 @@ const handleInputChange = (event) => {
   } else {
     render = (
       <>
-      <Grid container spacing={3}>
-        <Grid item sm={4} sx={12}>
-          <Button onClick={() => handleSubmit(0)}>Get in to Chat Room</Button>
-          <Button onClick={() => handleSubmit(1)}>FileList</Button>
-        </Grid>
-        <Grid item sm={4} sx={12}>
-          {/* <File 
+        <Grid container spacing={3}>
+          <Grid item sm={4} sx={12}>
+            <Button onClick={() => handleSubmit(0)}>Get in to Chat Room</Button>
+            <Button onClick={() => handleSubmit(1)}>FileList</Button>
+          </Grid>
+          <Grid item sm={4} sx={12}>
+            {/* <File 
           classId={classroomId}/> */}
+          </Grid>
         </Grid>
-      </Grid>
 
-      <Grid container className={classes.marginBottom}>
-      {tweetList.map(
-              (item, index) => (
-                <Post
-                name ={item.user}
-                date ={item.created_at}
-                text ={item.text}  
-                key={index}/>
-              )
-            )}        
-      </Grid>
-      <Grid item className={classes.fixedPost}>
-      <form className={classes.form} noValidate autoComplete="off"> 
-      <Input  className={classes.input} defaultValue="" value={state.tweet} placeholder={'New Post'} inputProps={{ 'aria-label': 'description' }} name="tweet" onChange={handleInputChange} />
-      <Button onClick={handleOnSubmit} >Post</Button>
-      </form>
-      </Grid>
+        <Grid container className={classes.marginBottom}>
+          {tweetList.map((item, index) => (
+            <Post
+              name={item.user}
+              date={item.created_at}
+              text={item.text}
+              key={index}
+            />
+          ))}
+        </Grid>
+        <Grid item className={classes.fixedPost}>
+          {/* <form className={classes.form} noValidate autoComplete="off">    */}
+          <div className={classes.form}>
+            <Input
+              className={classes.input}
+              defaultValue=""
+              value={tweet}
+              placeholder={'New Post'}
+              inputProps={{ 'aria-label': 'description' }}
+              name="tweet"
+              onChange={handleInputChange}
+            />
+            <Button onClick={handleOnSubmit}>Post</Button>
+          </div>
+        </Grid>
       </>
     );
   }
