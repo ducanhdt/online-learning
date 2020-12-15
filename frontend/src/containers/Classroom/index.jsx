@@ -1,32 +1,67 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { useDebounce } from 'use-debounce';
-
+import MaterialTable from 'material-table';
+import Box from '@material-ui/core/Box';
 import Room from './VideoRoom/Room';
 import File from './File/File';
 import FileList from './File/FileList';
-import Header from './File/Header';
+import TweetForm from './Tweet/TweetForm'
+import TweetList from './Tweet/TweetList'
 import ChatScreen from './Chat/ChatScreen';
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Avatar, Button, Grid, TextField , Input} from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import API from '../../apis';
 import { AccessTokenNotYetValidError } from 'twilio-video';
+import Post from './Post'
+import { PlayCircleFilledWhite } from '@material-ui/icons';
+import axios from 'axios';
+
+const useStyles = makeStyles({
+  form: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    padding: "20px 0",
+    
+
+  },
+  input: {
+    width: "100%"
+  },
+  fixedPost: {
+    position: "fixed",
+    bottom: 0,
+    backgroundColor: "white",
+    padding: 10,
+    width: 500
+    
+  },
+  marginBottom: {
+    marginBottom: 50
+  }
+});
 
 const Classroom = () => {
   const { classroomId } = useParams();
-
+  const [state, setState] = useState({
+    tweet: ''
+});
+  const classes = useStyles();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state) => state.auth);
   const [inRoom, setInRoom] = useState(false);
+  const [checkPost,setCheck] =useState(0);
   const [inList,setInList]=useState(false);
   const [videoToken, setVideoToken] = useState('hello');
   let className, member;
-
+  const [tweetList, setTweetList] = useState([]);
   const { name: username } = useSelector((state) => state.auth);
-
+  const [errorMsg, setErrorMsg] = useState('');
   const hangleGetOut = () => {
     setVideoToken('');
     setInRoom(false);
@@ -43,8 +78,73 @@ const Classroom = () => {
     return className;
   };
 
+  const handleOnSubmit = async (event) => {
+    console.log("hello")
+    event.preventDefault();
+    try {
+      // const { tweet } = state;
+      console.log(state.tweet)
+      if (state.tweet.trim() !== '' ) {
+        console.log("hello")
+          console.log(state.tweet);
+          setErrorMsg('');
+        //   console.log(classId);
+          const res = await axios.post(`http://localhost:8080/api/v1/tweet`,{
+            room : classroomId,
+            user: username,
+            tweet: state.tweet
+          })
+          .then((response) => {
+            console.log(response);
+            setCheck(checkPost+1);
+            setState({
+              tweet:''
+            });
+          }, (error) => {
+            console.log(error);
+          });
+          
+      } else {
+        setErrorMsg('Please enter all the field values.');
+      }
+    } catch (error) {
+      error.response && setErrorMsg(error.response.data);
+    }
+  };
+
+
+const handleInputChange = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value
+    });
+    console.log(state)
+  };
+  const getTweetList = async () => {
+    try {
+      
+      const { data } = await axios.get(`http://localhost:8080/api/v1/getAllTweets/${classroomId}`);
+      console.log(data.result);
+      setErrorMsg('');
+      
+      // setTweetList(data.result.map((tweets) => ({
+      //   ...tweets,
+      //   key:tweets.id,
+      // })),
+      // );
+      setTweetList(data.result);
+      //console.log(filesList);
+    } catch (error) {
+      error.response && setErrorMsg(error.response.data);
+    }
+  };
+
   useEffect(() => {
+    
+    getTweetList();
     getClassInfo();
+    // const interval=setInterval(getTweetList,10000)
+    // return()=>clearInterval(interval);
   }, []);
 
   const handleSubmit = async (bool) => {
@@ -86,7 +186,7 @@ const Classroom = () => {
     render = (
       <div>
         <Grid container spacing={3}>
-          <Grid item sm={8} sx={12}>
+          <Grid item sm={12} sx={12}>
             <FileList
             classId={classroomId}/>
           </Grid>
@@ -95,20 +195,36 @@ const Classroom = () => {
     );
   }else {
     render = (
+      <>
       <Grid container spacing={3}>
         <Grid item sm={4} sx={12}>
           <Button onClick={() => handleSubmit(0)}>Get in to Chat Room</Button>
           <Button onClick={() => handleSubmit(1)}>FileList</Button>
         </Grid>
         <Grid item sm={4} sx={12}>
-          <File 
-          classId={classroomId}/>
+          {/* <File 
+          classId={classroomId}/> */}
         </Grid>
-        {/* <Grid item sm={8} sx={12}>
-        <div>Token</div>
-        <div>{videoToken.substr(1, 20)}</div>
-      </Grid> */}
       </Grid>
+
+      <Grid container className={classes.marginBottom}>
+      {tweetList.map(
+              (item, index) => (
+                <Post
+                name ={item.user}
+                date ={item.created_at}
+                text ={item.text}  
+                key={index}/>
+              )
+            )}        
+      </Grid>
+      <Grid item className={classes.fixedPost}>
+      <form className={classes.form} noValidate autoComplete="off"> 
+      <Input  className={classes.input} defaultValue="" value={state.tweet} placeholder={'New Post'} inputProps={{ 'aria-label': 'description' }} name="tweet" onChange={handleInputChange} />
+      <Button onClick={handleOnSubmit} >Post</Button>
+      </form>
+      </Grid>
+      </>
     );
   }
 
