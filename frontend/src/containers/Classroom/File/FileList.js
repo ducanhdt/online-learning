@@ -6,8 +6,10 @@ import { Delete, Add } from '@material-ui/icons';
 import { Typography, Button, Avatar, TablePagination } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import useStyles from './index.style';
+import AddClassDialog from './File';
 
 const FilesList = ({classId}) => {
+  const [openAdd, setOpenAdd] = useState(false);
   const [filesList, setFilesList] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
   //const [files, setFiles] = useState([]);
@@ -20,14 +22,9 @@ const FilesList = ({classId}) => {
         formData.append('classroomId', classId);
         console.log(classId);
         const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/v1/getAllFiles/${classId}`);
-        // setFiles(
-        //   data.result.classroomId.map((classroom) => ({
-        //     ...classroom,
-        //     key: classroom.id,
-        //   })),
-        // );
-        //console.log(data);
+
         setErrorMsg('');
+        
         setFilesList(data.result.map((file) => ({
           ...file,
           key:file.id,
@@ -40,7 +37,11 @@ const FilesList = ({classId}) => {
     };
 
     getFilesList();
-  }, []);
+  }, [openAdd]);
+  
+  const handleOpenAdd = () => {
+    setOpenAdd(true);
+  };
 
   const downloadFile = async (id, path, mimetype) => {
     try {
@@ -78,67 +79,69 @@ const FilesList = ({classId}) => {
   return (
     // <div className="files-container">
     //   {/* {errorMsg && <p className="errorMsg">{errorMsg}</p>} */}
-    //   <table className="files-table">
-    //     <thead>
-    //       <tr>
-    //         <th>Title</th>
-    //         <th>Description</th>
-    //         <th>Download File</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {filesList.length > 0 ? (
-    //         filesList.map(
-    //           ({ id, title, description, file_path, file_mimetype }) => (
-    //             <tr key={id}>
-    //               <td className="file-title">{id}</td>
-    //               <td className="file-description">{description}</td>
-    //               <td>
-    //                 <a
-    //                   href="#/"
-    //                   onClick={() =>
-    //                     downloadFile(id, file_path, file_mimetype)
-    //                   }
-    //                 >
-    //                   Download
-    //                 </a>
-    //               </td>
-    //             </tr>
-    //           )
-    //         )
-    //       ) : (
-    //         <tr>
-    //           <td colSpan={3} style={{ fontWeight: '300' }}>
-    //             No files found. Please add some.
-    //           </td>
-    //         </tr>
-    //       )}
-    //     </tbody>
-    //   </table>
+      // <table className="files-table">
+      //   <thead>
+      //     <tr>
+      //       <th>Title</th>
+      //       <th>Description</th>
+      //       <th>Download File</th>
+      //     </tr>
+      //   </thead>
+      //   <tbody>
+      //     {filesList.length > 0 ? (
+      //       filesList.map(
+      //         ({ id, title, description, file_path, file_mimetype }) => (
+      //           <tr key={id}>
+      //             <td className="file-title">{id}</td>
+      //             <td className="file-description">{description}</td>
+      //             <td>
+      //               <a
+      //                 href="#/"
+      //                 onClick={() =>
+      //                   downloadFile(id, file_path, file_mimetype)
+      //                 }
+      //               >
+      //                 Download
+      //               </a>
+      //             </td>
+      //           </tr>
+      //         )
+      //       )
+      //     ) : (
+      //       <tr>
+      //         <td colSpan={3} style={{ fontWeight: '300' }}>
+      //           No files found. Please add some.
+      //         </td>
+      //       </tr>
+      //     )}
+      //   </tbody>
+      // </table>
     // </div>
 
     <div>
+      <AddClassDialog
+        open={openAdd}
+        classId = {classId}
+        //accessToken={accessToken}
+        //fetch={fetchClassrooms}
+        setOpen={(value) => setOpenAdd(value)
+        }
+      />
       <MaterialTable
         style={{ padding: '16px 32px' }}
         title={"FileList"}
         columns={columns}
         data={filesList}
         options={{ headerStyle: { fontWeight: 'bold' } }}
-        // actions={[
-        //   {
-        //     icon: 'add',
-        //     tooltip: 'Add User',
-        //     isFreeAction: true,
-        //     //onClick: (event) => handleOpenAdd(),
-        //   },
-        //   {
-        //     icon: 'add',
-        //     tooltip: 'JoinClass',
-        //     isFreeAction: true,
-        //     //onClick: (event) => handleOpenJoin(),
-        //   },
-        // ]}
-        // localization={{ toolbar: { searchPlaceholder: t('dashboard.search') } }}
+        actions={[
+          {
+            icon: 'add',
+            tooltip: 'Add File',
+            isFreeAction: true,
+            onClick: (event) => handleOpenAdd(),
+          },
+        ]}
+        localization={{ toolbar: { searchPlaceholder: t('dashboard.search') } }}
       />
     </div>
   );
