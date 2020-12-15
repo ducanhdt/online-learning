@@ -58,7 +58,7 @@ const File = ({classId}) => {
           console.log(formData);
           setErrorMsg('');
           console.log(classId);
-          const res = await axios.post(`http://localhost:8080/api/v1/upload`,  formData , {
+          const res = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/v1/upload`,  formData , {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

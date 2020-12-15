@@ -47,7 +47,7 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch, cla
   const [suggestions, setSuggestions] = useState([]);
   const fetchEmails = async () => {
     const response = await api.admin.getAllAccount(accessToken,"email");
-    console.log("email list",response.data.results.accounts);
+    // console.log("email list",response.data.results.accounts);
     setEmails(response.data.results.accounts)
   };
 
@@ -68,7 +68,7 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch, cla
 
 
   const onSuggestionsFetchRequested = ({ value }) => {
-    console.log("value",value);
+    // console.log("value",value);
     setSuggestions(getSuggestions(value,emails))
   };
 
@@ -77,13 +77,13 @@ export default function AddMemberDialog({ accessToken, open, setOpen, fetch, cla
   };
 
   const handleSubmit = async () => {
-    console.log( { classroomId, email});
+    // console.log( { classroomId, email});
     if (email.length == 0) return;
     const { data } = await api.account.joinClassroom(
       { classroomId, email },
       accessToken,
     );
-    console.log({ data });
+    // console.log({ data });
     if (data.status) {
       fetch();
       enqueueSnackbar(t('dashboard.addSuccess'), { variant: 'success' });

@@ -7,7 +7,11 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      - REACT_APP_API_DOMAIN=http://localhost:8080
+      # - REACT_APP_API_DOMAIN=http://localhost:8080
+      # - REACT_APP_CHAT_SERVER_DOMAIN=http://localhost:5000
+      - REACT_APP_API_DOMAIN=http://172.16.116.161:8080 
+      - REACT_APP_CHAT_SERVER_DOMAIN=http://172.16.116.161:5000 
+
     volumes: 
       - ./frontend:/app
     depends_on:

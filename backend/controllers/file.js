@@ -4,10 +4,8 @@ const File = require('../models/file');
 const path = require('path');
 
 const uploadFile = async (req, res) => {  
-    console.log("upload file");
-    //console.log(req)
+
     const { classroomId, title, description } = req.body;
-    //console.log(classroomId);
     const { path, mimetype } = req.file;
     const file = new File({
         class:classroomId,
@@ -23,9 +21,8 @@ const uploadFile = async (req, res) => {
 
 const getAllFiles =async (req,res)=>{
   
-  console.log("get file");
   //const classroom = req.query.identity;
-  console.log(req.params.classid);
+  // console.log(req.params.classid);
   const classId= req.params.classid;
   const file = await fileService.findAllFilesByClassId({classId});
   //console.log("result:")

@@ -31,9 +31,9 @@ const styles = {
     padding: 16,
     color: "white",
     fontSize: 12,
-    backgroundColor: isOwnMessage ? "#054740" : "#262d31",
+    backgroundColor: isOwnMessage ? "#4f1390" : "rgb(5 21 52)",
   }),
-  author: { fontSize: 10, color: "gray" },
+  author: { fontSize: 14, color: "black" },
   timestamp: { fontSize: 8, color: "white", textAlign: "right", paddingTop: 4 },
 };
 

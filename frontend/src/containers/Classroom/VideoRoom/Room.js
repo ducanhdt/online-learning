@@ -3,6 +3,7 @@ import Video from 'twilio-video';
 // import { LocalVideoTrack } from 'twilio-video';
 import Participant from './Participant';
 import ChatScreen from '../Chat/ChatScreen';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 const Room = ({ roomName, token, handleLogout }) => {
   const [room, setRoom] = useState(null);
@@ -10,15 +11,9 @@ const Room = ({ roomName, token, handleLogout }) => {
   const [isVideoOn, setVideoOn] = useState(false);
   const [isMute, setMute] = useState(false);
   const [isShareScreen, setShareScreen] = useState(false);
-  // const [roomConfig, setRoomConfig] = useState({
-  //   name: roomName,
-  //   // video: isVideoOn?{width:640}:false,
-  //   // audio:isMute,
-  //   dominantSpeaker: true,
-  //   tracks: [screenTrack],
-  // });
 
   const myFunction = async () => {
+    setParticipants([]);
     const participantConnected = (participant) => {
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
     };
@@ -33,6 +28,7 @@ const Room = ({ roomName, token, handleLogout }) => {
       roomConfig = {
         name: roomName,
         video: false,
+        dominantSpeaker: true,
       };
     } else {
       if (isShareScreen) {
@@ -41,11 +37,14 @@ const Room = ({ roomName, token, handleLogout }) => {
         roomConfig = {
           name: roomName,
           tracks: [screenTrack],
+          dominantSpeaker: true,
         };
       } else {
         roomConfig = {
           name: roomName,
-          video:{height:500}
+          video: { height: 500 },
+          audio: true,
+          dominantSpeaker: true,
         };
       }
     }
@@ -81,8 +80,35 @@ const Room = ({ roomName, token, handleLogout }) => {
   }, [roomName, token, isVideoOn, isMute, isShareScreen]);
 
   const remoteParticipants = participants.map((participant) => (
-    <Participant key={participant.sid} participant={participant} />
+    // <Participant style={styles.remoteParti} key={participant.sid} participant={participant} />
+    <div>
+      <h3>{participant.identity}</h3>
+      <img src="/images/defaultAvatar.jpg" alt="Trulli" width="20%"></img>
+    </div>
   ));
+
+  const mainShare = () => {
+    try {
+      // console.log({room});
+      if (room && room.localParticipant.identity === 'ducanh')
+        return (
+          <Participant
+            key={room.localParticipant.sid}
+            participant={room.localParticipant}
+          />
+        );
+
+      for (let index = 0; index < participants.length; index++) {
+        const element = participants[index];
+        if (element.identity === 'ducanh')
+          return <Participant key={element.sid} participant={element} />;
+      }
+    } catch (error) {
+      console.log({ room, error });
+      // return <Participant key={room.localParticipant.sid} participant={room.localParticipant} />
+    }
+  };
+
   const handleLog = () => {
     console.log({ room, participants });
   };
@@ -98,31 +124,47 @@ const Room = ({ roomName, token, handleLogout }) => {
   };
 
   return (
-    <div className="room">
+    <div className="room" style={styles.room}>
       {/* <h2>Room: {roomName}</h2> */}
       <div style={{ height: 600 }} className="local-participant">
-        {room &&
-         (
-          <Participant
-            key={room.localParticipant.sid}
-            participant={room.localParticipant}
-            inden={true}
-          />
-        )}
+        {mainShare()}
       </div>
-      <button onClick={handleLogout}>Log out</button>
-      <button onClick={handleLog}>Log info</button>
-      <button onClick={handleTurnVideo}>
-        {isVideoOn ? 'Turn off video' : 'Turn on Video'}
-      </button>
-      <button onClick={handleTurnMute}>{isVideoOn ? 'Unmute' : 'Mute'}</button>
-      <button onClick={handleShareScreen}>
-        {isShareScreen ? 'Stop Share Screen' : 'Share Screen'}
-      </button>
+      <ButtonGroup
+        // style={styles.buttonGroup}
+        variant="contained"
+        color="primary"
+        aria-label="contained primary button group"
+      >
+        <Button onClick={handleTurnVideo}>
+          {isVideoOn ? 'Turn off video' : 'Turn on Video'}
+        </Button>
+        <Button onClick={handleTurnMute}>{isMute ? 'Unmute' : 'Mute'}</Button>
+        <Button onClick={handleShareScreen}>
+          {isShareScreen ? 'Stop Share Screen' : 'Share Screen'}
+        </Button>
+        <Button onClick={handleLogout}>Log out</Button>
+        <Button onClick={handleLog}>Log Info</Button>
+      </ButtonGroup>
+
       <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
+      <div className="remote-participants" style={styles.remoteParti}>
+        {remoteParticipants}
+      </div>
     </div>
   );
+};
+const styles = {
+  room: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexGrow: 1,
+  },
+  remoteParti: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+    gridGap: '8px',
+  },
 };
 
 export default Room;

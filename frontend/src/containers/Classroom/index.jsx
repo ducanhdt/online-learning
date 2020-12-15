@@ -21,9 +21,10 @@ const Classroom = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { accessToken } = useSelector((state) => state.auth);
   const [inRoom, setInRoom] = useState(false);
-  const [inList,setInList]=useState(false);
+  const [inList, setInList] = useState(false);
   const [videoToken, setVideoToken] = useState('hello');
-  let className, member;
+  const [className, setClassName] = useState('');
+  const [member, setMember] = useState([]);
 
   const { name: username } = useSelector((state) => state.auth);
 
@@ -37,9 +38,9 @@ const Classroom = () => {
       { classroomId },
       accessToken,
     );
-    className = response.data.result.name;
-    member = response.data.result.member;
-    // console.log({ className, member, username });
+    setClassName(response.data.result.name);
+    setMember(response.data.result.member);
+    console.log({ className, member, username });
     return className;
   };
 
@@ -52,12 +53,11 @@ const Classroom = () => {
     if (response.status == 200) {
       let { token } = response.data;
       setVideoToken(token);
-      if(bool==0){
-      setInRoom(true);
-      }else{
+      if (bool == 0) {
+        setInRoom(true);
+      } else {
         setInList(true);
       }
-      // console.log({token,username,classroomId});
       enqueueSnackbar('Success', { variant: 'success' });
     } else {
       console.log(response);
@@ -67,33 +67,26 @@ const Classroom = () => {
 
   if (inRoom) {
     render = (
-      <div>
-        <Grid container spacing={3}>
-          <Grid item sm={8} sx={12}>
-            <Room
-              roomName={className}
-              token={videoToken}
-              handleLogout={hangleGetOut}
-            />
-          </Grid>
-          <Grid style={styles.chat} item sm={4} sx={12}>
-            <ChatScreen email={username} room={classroomId} />
-          </Grid>
-        </Grid>
+      <div style={{ display: 'flex' }}>
+        <Room
+          roomName={className}
+          token={videoToken}
+          handleLogout={hangleGetOut}
+        />
+        <ChatScreen email={username} room={className} />
       </div>
     );
-  }else if(inList){
+  } else if (inList) {
     render = (
       <div>
         <Grid container spacing={3}>
           <Grid item sm={8} sx={12}>
-            <FileList
-            classId={classroomId}/>
+            <FileList classId={classroomId} />
           </Grid>
         </Grid>
       </div>
     );
-  }else {
+  } else {
     render = (
       <Grid container spacing={3}>
         <Grid item sm={4} sx={12}>
@@ -101,8 +94,7 @@ const Classroom = () => {
           <Button onClick={() => handleSubmit(1)}>FileList</Button>
         </Grid>
         <Grid item sm={4} sx={12}>
-          <File 
-          classId={classroomId}/>
+          <File classId={classroomId} />
         </Grid>
         {/* <Grid item sm={8} sx={12}>
         <div>Token</div>
@@ -115,19 +107,16 @@ const Classroom = () => {
   return render;
 };
 
-
-
-
 const styles = {
-  chat : {
-    border: '2px solid #29d',
+  chat: {
+    border: '2px solid rgb(5 21 52)',
     borderRadius: '20px',
     position: 'fixed',
-    bottom: '10px',
+    bottom: '18px',
     right: '0',
-    width: '28%',
+    // width: '28%',
     padding: '7px',
-  }
+  },
 };
 
 export default Classroom;

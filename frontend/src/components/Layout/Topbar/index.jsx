@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import {
@@ -25,7 +25,7 @@ import useStyles from './index.style';
 export default function Topbar({ isAdmin, open, handleDrawerOpen }) {
   const [anchorProfile, setAnchorProfile] = useState(null);
   const [anchorLanguage, setAnchorLanguage] = useState(null);
-
+  const { name } = useSelector((state) => state.auth);
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -69,6 +69,7 @@ export default function Topbar({ isAdmin, open, handleDrawerOpen }) {
       open={Boolean(anchorProfile)}
       onClose={handleProfileMenuClose}
     >
+      <MenuItem>{name}</MenuItem>
       <MenuItem onClick={handleLogout}>{t('topbar.logout')}</MenuItem>
     </Menu>
   );

@@ -2,7 +2,7 @@ import { api as API } from './api';
 
 export async function upFile(formData, headers) {
   try {
-    console.log({classroomId,accessToken});
+    // console.log({classroomId,accessToken});
     const response = await API({
       method: 'POST',
       url: `/upload`,

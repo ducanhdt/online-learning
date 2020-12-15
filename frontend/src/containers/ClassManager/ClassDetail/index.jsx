@@ -34,10 +34,10 @@ export default function ClassDetail({ accessToken, classroomId }) {
       { classroomId },
       accessToken,
     );
-    console.log(data.result);
+    // console.log(data.result);
     if (data.status) {
       setClassInfo(data.result);
-      console.log(data.result);
+      // console.log(data.result);
     }
   };
 

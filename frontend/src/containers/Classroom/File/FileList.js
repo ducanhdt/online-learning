@@ -19,7 +19,7 @@ const FilesList = ({classId}) => {
         const formData = new FormData();
         formData.append('classroomId', classId);
         console.log(classId);
-        const { data } = await axios.get(`http://localhost:8080/api/v1/getAllFiles/${classId}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/v1/getAllFiles/${classId}`);
         // setFiles(
         //   data.result.classroomId.map((classroom) => ({
         //     ...classroom,
@@ -45,7 +45,7 @@ const FilesList = ({classId}) => {
   const downloadFile = async (id, path, mimetype) => {
     try {
       console.log(id);
-      const result = await axios.get(`http://localhost:8080/api/v1/download/${id}`, {
+      const result = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/v1/download/${id}`, {
         responseType: 'blob'
       });
       const split = path.split('/');

@@ -2,7 +2,7 @@ import { api as API } from './api';
 
 export async function getVideoToken(classroomId, accessToken) {
   try {
-    console.log({classroomId,accessToken});
+    console.log("className,username",classroomId,accessToken);
     const response = await API({
       method: 'POST',
       url: `/video/token`,

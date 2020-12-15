@@ -31,7 +31,6 @@ async function removeClassroom(req, res) {
   const { classroomId,accountId } = req.body;
   const id = accountId?accountId:req.account._id;
   await accountService.removeClassroom({ id, classroomId });
-  console.log("remove");
   await classService.deleteMember({classroomId,accountId:id})
   return res.send({ status: 1 });
 }
