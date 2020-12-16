@@ -11,7 +11,7 @@ export async function changeAccountInfo(updateDatas, accessToken) {
 
     return response;
   } catch (error) {
-    console.log('error', error);
+    //console.log('error', error);
     return error.response;
   }
 }
@@ -29,7 +29,7 @@ export async function changePassword(
     });
     return response;
   } catch (error) {
-    console.log('error', error);
+    //console.log('error', error);
     return error.response;
   }
 }
@@ -66,7 +66,7 @@ export async function joinClassroom({classroomId,email},accessToken) {
 export async function outClassroom({classroomId,accountId},accessToken) {
   // get out accout from class
   try {
-    console.log(classroomId);
+    //console.log(classroomId);
     const response = await API({
       method: 'DELETE',
       url: `account`,

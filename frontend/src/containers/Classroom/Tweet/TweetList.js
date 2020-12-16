@@ -16,11 +16,6 @@ const TweetList = ({userName,classId}) => {
             //console.log(data);
             setErrorMsg('');
             
-            // setTweetList(data.result.map((tweets) => ({
-            //   ...tweets,
-            //   key:tweets.id,
-            // })),
-            // );
             setTweetList(data.result);
             //console.log(filesList);
           } catch (error) {
@@ -31,19 +26,7 @@ const TweetList = ({userName,classId}) => {
         getTweetList();
       }, []);
 
-    // render() {
-    //     const {tweets, deleteTweet, currentUser} = this.props;
-    //     let tweetList = tweets.map(t => (
-            // <TweetItem
-            //     key={t._id}
-            //     date={t.createdAt}
-            //     text={t.text}
-            //     username={t.user.username}
-            //     profileImgURL={t.user.profileImgURL}
-            //     removeTweet={deleteTweet.bind(this, t.user._id ,t._id)}
-            //     isOwner={currentUser === t.user._id}
-            // />
-    //     ));
+
 
     return (
         <div className="row col-sm-8">

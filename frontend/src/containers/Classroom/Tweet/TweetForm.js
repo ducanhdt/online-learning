@@ -16,7 +16,7 @@ const TweetForm = ({userName,classId}) => {
         try {
           const { tweet } = state;
           if (tweet.trim() !== '' ) {
-              console.log(state.tweet);
+              //console.log(state.tweet);
               setErrorMsg('');
             //   console.log(classId);
               const res = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/v1/tweet`,{
@@ -24,9 +24,9 @@ const TweetForm = ({userName,classId}) => {
                 tweet: state.tweet
               })
               .then((response) => {
-                console.log(response);
+                //console.log(response);
               }, (error) => {
-                console.log(error);
+                //console.log(error);
               });
           } else {
             setErrorMsg('Please enter all the field values.');

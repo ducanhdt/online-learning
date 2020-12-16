@@ -25,9 +25,9 @@ const createFile = async ({file}) => {
 };
 
 const findAllFilesByClassId = async ({classId}) => {
-  console.log("service get file");
+  //console.log("service get file");
   let file = await File.find({class:classId});
-  console.log(file);
+  //console.log(file);
   // const sortedByCreationDate = files.sort(
   //   (a, b) => b.createdAt - a.createdAt
   // );

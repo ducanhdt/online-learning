@@ -1,17 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {
-  AppBar,
-  Backdrop,
-  CircularProgress,
-  Container,
-  CssBaseline,
-  Grid,
-  IconButton,
-  List,
-  TextField,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -45,7 +33,7 @@ const useStyles = makeStyles({
 });
 
 const ChatScreen = ({ email, room }) => {
-  console.log({ email, room });
+  //console.log({ email, room });
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -71,7 +59,7 @@ const ChatScreen = ({ email, room }) => {
 
   const handleMessageAdded = (message) => {
     // const mess= messages
-    console.log('handleMessageAdded', messages.length);
+    //console.log('handleMessageAdded', messages.length);
     setMessages((oldMess) => [...oldMess, message]);
     scrollToBottom();
   };
@@ -91,7 +79,7 @@ const ChatScreen = ({ email, room }) => {
     try {
       token = await getToken(email);
     } catch {
-      console.log('unable to get token, please reload this page');
+      //console.log('unable to get token, please reload this page');
     }
 
     const client = await Chat.Client.create(token);
@@ -111,7 +99,7 @@ const ChatScreen = ({ email, room }) => {
       const oldMess = await channel.getMessages();
       // debugger;
       if (oldMess.items.length) {
-        console.log('oldMess', oldMess);
+        //console.log('oldMess', oldMess);
         setMessages((oldMessages) => [...oldMessages, ...oldMess.items]);
         scrollToBottom();
       }
@@ -132,7 +120,7 @@ const ChatScreen = ({ email, room }) => {
         setChannel(channel);
         setLoading(false);
       } catch {
-        console.log('unable to create channel, please reload this page');
+        //console.log('unable to create channel, please reload this page');
       }
     }
   };
@@ -151,10 +139,10 @@ const ChatScreen = ({ email, room }) => {
   };
 
   const handleKeyPress = (event) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       sendMessage();
     }
-  }
+  };
 
   return (
     <div className={classes.chatScreen}>
@@ -176,7 +164,7 @@ const ChatScreen = ({ email, room }) => {
           value={text}
           disabled={!channel}
           onChange={(event) => setText(event.target.value)}
-          onKeyPress={(event)=>handleKeyPress(event)}
+          onKeyPress={(event) => handleKeyPress(event)}
         />
         <IconButton
           style={styles.sendButton}

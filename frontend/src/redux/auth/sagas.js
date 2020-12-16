@@ -24,7 +24,7 @@ function logoutSaga() {
   try {
     setCookie('accessToken', null, 1);
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 function* verifyTokenSaga({ accessToken }) {

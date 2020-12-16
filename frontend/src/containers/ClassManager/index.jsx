@@ -66,7 +66,7 @@ const ClassManager = () => {
   };
 
   const handleClickClass = async (classId) => {
-    console.log(classId);
+    //console.log(classId);
     setActiveClassId(classId);
   };
 

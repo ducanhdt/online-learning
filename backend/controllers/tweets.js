@@ -2,16 +2,16 @@ const Tweet = require('../models/tweet');
 //const jwt = require("jsonwebtoken");
 
 const createTweet = async function (req, res) {
-    console.log("hello")
+    //console.log("hello")
     //console.log(req.body)
     const {room, user,tweet } = req.body;
-    console.log(room);
+    //console.log(room);
     let tweetinit = await Tweet.create({
         class: room,
         text: tweet,
         user: user
     });
-    console.log(tweetinit)
+    //console.log(tweetinit)
         // let foundUser = await db.User.findById(req.params.id);
         // foundUser.tweets.push(tweet.id);
         // await foundUser.save();

@@ -15,7 +15,7 @@ function PrivateRoute({ component: Component, ...rest }) {
             return <Redirect to="/admins/accounts" />;
           }
           if (!isAdmin && props.location.pathname.includes('/admins')) {
-            console.log("true");
+            //console.log("true");
             return <Redirect to="/dashboard" />;
           }
           return <Component {...props} accessToken={accessToken} />;

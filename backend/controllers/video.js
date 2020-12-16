@@ -20,7 +20,7 @@ const postVideoToken = (req, res) => {
   const identity = req.body.identity;
   const room = req.body.room;
   const token = videoToken(identity, room, config);
-  console.log(token);
+  //console.log(token);
   sendTokenResponse(token, res);
 };
 module.exports = {

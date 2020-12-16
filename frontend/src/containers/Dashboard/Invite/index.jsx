@@ -29,7 +29,7 @@ export default function JoinClassDialog({
   const handleSubmit = async () => {
     if (classId.length==0) return;
     const { data } = await api.account.joinClassroom ({classroomId: classId},accessToken);
-    console.log({data});
+    //console.log({data});
     if (data.status) {
       fetch();
       enqueueSnackbar(t('dashboard.addSuccess'), { variant: 'success' });

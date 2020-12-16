@@ -10,7 +10,7 @@ export async function uploadImage({ imageData }, accessToken) {
     });
     return response;
   } catch (error) {
-    console.log('error', error);
+    //console.log('error', error);
     return error.response;
   }
 }

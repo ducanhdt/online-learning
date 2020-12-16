@@ -74,19 +74,19 @@ const Classroom = () => {
     );
     setClassName(response.data.result.name);
     setMember(response.data.result.member);
-    console.log({ className, member, username });
+    //console.log({ className, member, username });
     return className;
   };
 
   const handleOnSubmit = async (event) => {
-    console.log('hello');
+    //console.log('hello');
     event.preventDefault();
     try {
       // const { tweet } = state;
-      console.log(tweet);
+      //console.log(tweet);
       if (tweet.trim() !== '') {
-        console.log('hello');
-        console.log(tweet);
+        //console.log('hello');
+        //console.log(tweet);
         setErrorMsg('');
         //   console.log(classId);
         const res = await axios
@@ -97,13 +97,13 @@ const Classroom = () => {
           })
           .then(
             (response) => {
-              console.log(response);
+              //console.log(response);
               setCheck(checkPost + 1);
               getTweetList()
               setTweet('')
             },
             (error) => {
-              console.log(error);
+              //console.log(error);
             },
           );
       } else {
@@ -122,7 +122,7 @@ const Classroom = () => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_DOMAIN}/api/v1/getAllTweets/${classroomId}`,
       );
-      console.log(data.result);
+      //console.log(data.result);
       setErrorMsg('');
 
       // setTweetList(data.result.map((tweets) => ({

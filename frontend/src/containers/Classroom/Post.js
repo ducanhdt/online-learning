@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Button, CardContent, Card } from '@material-ui/core';
+import { Avatar, CardContent, Card } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -30,7 +30,7 @@ export default function Post({ name, date, text }) {
   const classes = useStyles();
   const day = date.split('T')[0];
   const time = date.split('T')[1].substring(0, 8);
-  console.log({ day, time });
+  //console.log({ day, time });
   return (
     <>
       <Card className={classes.root}>

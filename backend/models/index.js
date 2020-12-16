@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Account = require('./account');
 const authService = require('../services/auth');
-const Action = require('./action')
-const Classroom = require('./classroom')
 
 const {
   MONGO_HOST,

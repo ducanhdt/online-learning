@@ -1,7 +1,6 @@
 import Login from '../containers/Login';
 import Dashboard from '../containers/Dashboard';
 import Account from '../containers/Account';
-import Rule from '../containers/Rule';
 import Admin from '../containers/Admin';
 import ClassManager from '../containers/ClassManager';
 import Classroom from '../containers/Classroom';
@@ -16,11 +15,6 @@ const appRoutes = {
   changeinfo: {
     url: '/account',
     component: Account,
-    private: true,
-  },
-  rule: {
-    url: '/rules',
-    component: Rule,
     private: true,
   },
   dashboard: {
