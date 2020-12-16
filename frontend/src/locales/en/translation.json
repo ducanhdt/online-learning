@@ -65,5 +65,12 @@
     "requireClassId": "ClassId is require",
     "outClass": "Get out Class",
     "sureToGetOut": "Are you sure to get out??"
+  },
+  "adminClass":{
+    "name": "Name",
+    "email": "Email address",
+    "action": "Action",
+    "classTitle": "Class name"
   }
 }
+

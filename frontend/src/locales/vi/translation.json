@@ -66,6 +66,12 @@
     "requireClassId": "ClassId không được bỏ trống",
     "outClass": "Ra khỏi lớp học",
     "sureToGetOut": "Bạn chắc muốn rời khỏi lớp chứ"
+  },
+  "adminClass":{
+    "name": "Tên",
+    "email": "Địa chỉ email",
+    "action": "Hành động",
+    "classTitle": "Tên lớp học"
   }
 }
 

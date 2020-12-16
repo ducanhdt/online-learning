@@ -113,7 +113,7 @@ export default function ClassDetail({ accessToken, classroomId }) {
       />
       <MaterialTable
         style={{ padding: '16px 32px' }}
-        title= {t('adminClass.classTitle')+(classInfo && classInfo.name)}
+        title= {t('adminClass.classTitle')+': '+(classInfo && classInfo.name)}
         columns={columns}
         data={classInfo && classInfo.member}
         options={{ headerStyle: { fontWeight: 'bold' },exportButton: true }}
