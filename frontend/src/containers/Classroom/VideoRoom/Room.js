@@ -143,7 +143,7 @@ const Room = ({ roomName, token, handleLogout }) => {
           {isShareScreen ? 'Stop Share Screen' : 'Share Screen'}
         </Button>
         <Button onClick={handleLogout}>Log out</Button>
-        <Button onClick={handleLog}>Log Info</Button>
+        {/* <Button onClick={handleLog}>Log Info</Button> */}
       </ButtonGroup>
 
       <h3>Remote Participants</h3>

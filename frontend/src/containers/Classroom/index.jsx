@@ -34,8 +34,11 @@ const useStyles = makeStyles({
     position: 'fixed',
     bottom: 0,
     backgroundColor: 'white',
-    padding: 10,
-    width: 500,
+    padding: "10",
+    width: '60%',
+    backgroundColor: '#e6e4e6',
+    borderRadius: '20px',
+    padding: '20px',
   },
   marginBottom: {
     marginBottom: 50,
@@ -87,7 +90,7 @@ const Classroom = () => {
         setErrorMsg('');
         //   console.log(classId);
         const res = await axios
-          .post(`http://localhost:8080/api/v1/tweet`, {
+          .post(`${process.env.REACT_APP_API_DOMAIN}/api/v1/tweet`, {
             room: classroomId,
             user: username,
             tweet: tweet,
@@ -117,7 +120,7 @@ const Classroom = () => {
   const getTweetList = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/v1/getAllTweets/${classroomId}`,
+        `${process.env.REACT_APP_API_DOMAIN}/api/v1/getAllTweets/${classroomId}`,
       );
       console.log(data.result);
       setErrorMsg('');

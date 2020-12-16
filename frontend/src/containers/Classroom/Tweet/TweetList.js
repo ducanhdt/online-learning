@@ -12,7 +12,7 @@ const TweetList = ({userName,classId}) => {
         const getTweetList = async () => {
           try {
             
-            const { data } = await axios.get(`http://localhost:8080/api/v1/getAllTweets`);
+            const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/v1/getAllTweets`);
             //console.log(data);
             setErrorMsg('');
             

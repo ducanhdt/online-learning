@@ -1,11 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Button, CardContent , Card} from '@material-ui/core';
+import { Avatar, Button, CardContent, Card } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
-    width: "100%",
+    width: '100%',
     marginBottom: 30,
   },
   bullet: {
@@ -17,30 +17,47 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 4,
+  },
+  content: {
+    backgroundColor:'aliceblue',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 });
 
-export default function Post({name,date,text}) {
+export default function Post({ name, date, text }) {
   const classes = useStyles();
-  console.log(date);
+  const day = date.split('T')[0];
+  const time = date.split('T')[1].substring(0, 8);
+  console.log({ day, time });
   return (
-      <>
-    <Card className={classes.root} >
-      <CardContent>
-      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {name}
-        </Typography>
-        
-        <Typography className={classes.pos} color="textSecondary">
-          {date}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {text}
-        </Typography>
-      </CardContent>
-    </Card>
+    <>
+      <Card className={classes.root}>
+        <CardContent className={classes.content}>
+          <div style={{display:'flex'}}>
+            <div style={{width: '100px',maxWidth: '100px'}}>
+              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <Typography
+                className={classes.title}
+                color="textSecondary"
+                gutterBottom
+              >
+                {name}
+              </Typography>
+            </div>
+            <Typography style={{marginLeft:"20px"}} variant="body2" component="p">
+              {text}
+            </Typography>
+          </div>
+
+          <Typography className={classes.pos} color="textSecondary">
+            {day}
+            <br />
+            {time}
+          </Typography>
+        </CardContent>
+      </Card>
     </>
   );
 }

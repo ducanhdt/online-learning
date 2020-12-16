@@ -19,7 +19,7 @@ const TweetForm = ({userName,classId}) => {
               console.log(state.tweet);
               setErrorMsg('');
             //   console.log(classId);
-              const res = await axios.post(`http://localhost:8080/api/v1/tweet`,{
+              const res = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/v1/tweet`,{
                 user: userName,
                 tweet: state.tweet
               })

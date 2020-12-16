@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     overflowX: 'hidden',
     overflowY: 'auto',
-    backgroundColor: 'darkgray',
+    backgroundColor: 'aliceblue',
   },
   chatInput: {
     display: 'flex',

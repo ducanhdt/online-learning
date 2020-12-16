@@ -31,6 +31,9 @@ services:
       - JWT_SECRET_KEY=YiKi9EJgIYV7lS7iUskLZmt7xU9k0gAz
       - JWT_EXPIRES_TIME=86400000
       - PEPPER=wegkocgxjywglqrqzuefkxofxqtdkaqz
+      - TWILIO_ACCOUNT_SID= AC78e1bcdc559f21a45fbc674b732ef44b
+      - TWILIO_API_KEY= SKf625a544e87cd4012b3b796a9b855e6e
+      - TWILIO_API_SECRET= n7vDzA68qwbUsTPfjV4x9wbbzx89bQgo
     volumes: 
       - ./backend:/app
     depends_on:
@@ -41,5 +44,20 @@ services:
       - "27017:27017"
     volumes: 
       - online-learning-db-anhdtd:/data/db
+  chatserver:
+    build: ./chat_server
+    ports:
+      - "5000:5000"      
+
+    environment:
+      - PORT=5000
+      - TWILIO_ACCOUNT_SID=AC78e1bcdc559f21a45fbc674b732ef44b
+      - TWILIO_API_KEY=SKf625a544e87cd4012b3b796a9b855e6e
+      - TWILIO_API_SECRET=n7vDzA68qwbUsTPfjV4x9wbbzx89bQgo
+      - TWILIO_CHAT_SERVICE_SID=IS60989269c75749d793a91ea942240993
+    volumes: 
+      - ./chat_server:/app
+  
+
 volumes: 
   online-learning-db-anhdtd:
