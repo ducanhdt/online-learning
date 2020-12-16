@@ -31,13 +31,13 @@ const getAllFiles =async (req,res)=>{
 };
 
 const downloadFile = async (req,res) =>{
-  console.log("download file")
+  // console.log("download file")
   const fileId = req.params.id
   //console.log(fileId);
   const file = await fileService.findFileById({
         fileId
   });
-  console.log(file);
+  // console.log(file);
   res.set({'Content-Type': file.file_mimetype});
   res.sendFile(path.join(__dirname, '..', file.file_path));
 }

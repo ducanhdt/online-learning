@@ -47,7 +47,7 @@ export default function AddClassDialog({
   const handleSubmit = async () => {
     if (!validateAccount()) return;
     const { data } = await api.classroom.addClassroom({ name, description }, accessToken);
-    console.log({data});
+    //console.log({data});
     if (data.status) {
       fetch();
       enqueueSnackbar(t('dashboard.addSuccess'), { variant: 'success' });

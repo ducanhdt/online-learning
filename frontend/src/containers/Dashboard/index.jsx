@@ -89,7 +89,7 @@ export default function ClassList({ accessToken }) {
           </Button>
           <Button
             onClick={() => {
-              console.log(`classroom/${record.id}`);
+              //console.log(`classroom/${record.id}`);
               history.push(`classroom/${record.id}`);
             }}
           >

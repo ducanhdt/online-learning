@@ -4,7 +4,7 @@ const CustomError = require('../errors/CustomError');
 const errorCodes = require('../errors/code');
 
 const Classroom = require('../models/classroom');
-const Bot = require('../models/bot');
+
 
 const dbUtil = require('../utils/db');
 
@@ -86,7 +86,7 @@ const addMember = async ({classroomId,accountId }) => {
   if (!classroom) throw new CustomError(errorCodes.TEMPLATE_NOT_EXISTS);
   
   const member = [...classroom.member,accountId];
-  console.log({classroom,member});
+  //console.log({classroom,member});
   await updateClassroom({classroomId, updateFields:{ member}})
 
   return classroom;
@@ -95,7 +95,7 @@ const deleteMember = async ({classroomId,accountId }) => {
 
   let classroom = await Classroom.findById(classroomId);
   if (!classroom) throw new CustomError(errorCodes.TEMPLATE_NOT_EXISTS);
-  console.log({classroom});
+  //console.log({classroom});
   const member = classroom.member.filter(item => String(item) != String(accountId) );
   await updateClassroom({classroomId, updateFields:{ member}})
 

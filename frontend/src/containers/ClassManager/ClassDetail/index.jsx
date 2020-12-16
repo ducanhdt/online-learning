@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'material-table';
-import { Delete, Add } from '@material-ui/icons';
-import { Typography, Button, Avatar, TablePagination } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
+import { Typography, Button, Avatar } from '@material-ui/core';
 import api from '../../../apis';
 
 import AddMemberDialog from '../AddMember';
-// import JoinClassDialog from './JoinClass';
-// import DeleteClassDialog from './OutClass';
 
 import useStyles from './index.style';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom';
@@ -19,7 +16,6 @@ export default function ClassDetail({ accessToken, classroomId }) {
   const [openAdd, setOpenAdd] = useState(false);
   const [openJoin, setOpenJoin] = useState(false);
   const [openOut, setOpenOut] = useState(false);
-  // const [openJoin, setOpenJoin] = useState(0);
   const history = useHistory();
 
   const [choiceClass, setChoiceClass] = useState('');
@@ -47,7 +43,7 @@ export default function ClassDetail({ accessToken, classroomId }) {
   };
 
   const handleOpenAdd = () => {
-    console.log("add member to this class");
+    //console.log("add member to this class");
     setOpenAdd(true);
   };
 

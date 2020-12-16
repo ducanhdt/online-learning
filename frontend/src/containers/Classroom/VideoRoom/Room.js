@@ -53,11 +53,11 @@ const Room = ({ roomName, token, handleLogout }) => {
       room.on('participantConnected', participantConnected);
       room.on('participantDisconnected', participantDisconnected);
       room.on('dominantSpeakerChanged', (participant) => {
-        console.log('The new dominant speaker in the Room is:', participant);
+        //console.log('The new dominant speaker in the Room is:', participant);
       });
       room.participants.forEach(participantConnected);
     });
-    console.log({ room });
+    //console.log({ room });
     return () => {
       setRoom((currentRoom) => {
         if (currentRoom && currentRoom.localParticipant.state === 'connected') {
@@ -90,27 +90,28 @@ const Room = ({ roomName, token, handleLogout }) => {
   const mainShare = () => {
     try {
       // console.log({room});
-      if (room && room.localParticipant.identity === 'ducanh')
+      
+      for (let index = 0; index < participants.length; index++) {
+        const element = participants[index];
+        if (element.identity === 'ducanh')
+        return <Participant key={element.sid} participant={element} />;
+      }
+
+      if (room && room.localParticipant)
         return (
           <Participant
             key={room.localParticipant.sid}
             participant={room.localParticipant}
           />
         );
-
-      for (let index = 0; index < participants.length; index++) {
-        const element = participants[index];
-        if (element.identity === 'ducanh')
-          return <Participant key={element.sid} participant={element} />;
-      }
     } catch (error) {
-      console.log({ room, error });
+      //console.log({ room, error });
       // return <Participant key={room.localParticipant.sid} participant={room.localParticipant} />
     }
   };
 
   const handleLog = () => {
-    console.log({ room, participants });
+    //console.log({ room, participants });
   };
   const handleTurnVideo = () => {
     setVideoOn(!isVideoOn);
@@ -143,7 +144,7 @@ const Room = ({ roomName, token, handleLogout }) => {
           {isShareScreen ? 'Stop Share Screen' : 'Share Screen'}
         </Button>
         <Button onClick={handleLogout}>Log out</Button>
-        {/* <Button onClick={handleLog}>Log Info</Button> */}
+        <Button onClick={handleLog}>Log Info</Button>
       </ButtonGroup>
 
       <h3>Remote Participants</h3>
