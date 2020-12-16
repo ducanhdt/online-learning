@@ -187,8 +187,8 @@ const Classroom = () => {
       <>
         <Grid container spacing={3}>
           <Grid item sm={4} sx={12}>
-            <Button onClick={() => handleSubmit(0)}>Get in to Chat Room</Button>
-            <Button onClick={() => handleSubmit(1)}>FileList</Button>
+            <Button onClick={() => handleSubmit(0)}> {t('classroom.enter')} </Button>
+            <Button onClick={() => handleSubmit(1)}>{t('classroom.file')}</Button>
           </Grid>
           <Grid item sm={4} sx={12}>
             {/* <File 
@@ -213,12 +213,12 @@ const Classroom = () => {
               className={classes.input}
               defaultValue=""
               value={tweet}
-              placeholder={'New Post'}
+              placeholder={t('classroom.new')}
               inputProps={{ 'aria-label': 'description' }}
               name="tweet"
               onChange={handleInputChange}
             />
-            <Button onClick={handleOnSubmit}>Post</Button>
+            <Button onClick={handleOnSubmit}>{t('classroom.post')}</Button>
           </div>
         </Grid>
       </>

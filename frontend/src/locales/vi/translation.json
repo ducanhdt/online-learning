@@ -31,6 +31,12 @@
     "addSuccess":"Thêm tài khoản thành công",
     "accountExist":"Tài khoản đã tồn tại"
   },
+  "adminClass":{
+     "name": "Tên người dùng",
+     "email":"Địa chỉ email",
+     "action":"Hành động",
+     "classTitle":"Quản lý người dùng" 
+  },
   "rulePage":{
     "deleteSuccess": "Xóa luật thành công",
     "deleteFail": "Xóa luật thất bại",
@@ -67,11 +73,11 @@
     "outClass": "Ra khỏi lớp học",
     "sureToGetOut": "Bạn chắc muốn rời khỏi lớp chứ"
   },
-  "adminClass":{
-    "name": "Tên",
-    "email": "Địa chỉ email",
-    "action": "Hành động",
-    "classTitle": "Tên lớp học"
+  "classroom":{
+    "enter":"Vào phòng chat",
+    "file" :"Quản lý File",
+    "post":"Đăng",
+    "new" :"Nhập post"
   }
 }
 

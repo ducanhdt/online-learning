@@ -1,4 +1,4 @@
-# chatbot-frontend
+# Online Learning Platform
 
 ## Installation
 
