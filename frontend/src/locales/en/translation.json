@@ -30,6 +30,12 @@
     "addSuccess":"Add account successfully",
     "accountExist":"Account exist"
   },
+  "adminClass":{
+    "name": "User Name",
+    "email":"Email",
+    "action":"Action",
+    "classTitle":"User Manager" 
+ },
   "rulePage":{
     "deleteSuccess": "Delete rule succesfully",
     "deleteFail": "Delete rule fail",
@@ -65,5 +71,11 @@
     "requireClassId": "ClassId is require",
     "outClass": "Get out Class",
     "sureToGetOut": "Are you sure to get out??"
+  },
+  "classroom":{
+    "enter":"Get into classroom",
+    "file" :"FileList",
+    "post":"Post",
+    "new" :"New post"
   }
 }
